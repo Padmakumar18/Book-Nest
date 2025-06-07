@@ -1,7 +1,6 @@
 .library-loader {
   height: 100vh;
   width: 100vw;
-  background: #fdf6ee;
   display: flex;
   flex-direction: column;
   justify-content: center;
