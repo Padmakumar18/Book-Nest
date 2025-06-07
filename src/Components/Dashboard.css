@@ -2,19 +2,21 @@
     display: flex;
     gap: 1em;
     margin: 1em;
+    justify-content: space-evenly;
 }
 
 .button {
-    background-color: #aa7228;
+    background-color: #855a21;
     color: white;
     letter-spacing: 1px;
     border: none;
+    padding: 1em;
     border-radius: 0.3em;
     cursor: pointer;
 }
 
 .remainder {
-    background-color: #aa7228;
+    background-color: #855a21;
     color: white;
     letter-spacing: 1px;
     padding: 1em;
