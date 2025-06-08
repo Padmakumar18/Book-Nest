@@ -1,11 +1,11 @@
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 1em;
-  margin: 1em;
   justify-content: space-evenly;
 }
 
-/* .button {
+.button {
   letter-spacing: 1px;
   border: none;
   padding: 1em;
@@ -23,7 +23,7 @@
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   transition: all 0.3s ease;
-} */
+}
 
 .button:hover,
 .remainder:hover {
