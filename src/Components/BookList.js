@@ -91,80 +91,8 @@ const books = [
     genre: "Memoir",
     publishedYear: 2018,
     availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8899571-L.jpg",
-  },
-  {
-    title: "Atomic Habits",
-    author: "James Clear",
-    isbn: "9780735211292",
-    genre: "Self-help",
-    publishedYear: 2018,
-    availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/9644266-L.jpg",
-  },
-  {
-    title: "Educated",
-    author: "Tara Westover",
-    isbn: "9780399590504",
-    genre: "Memoir",
-    publishedYear: 2018,
-    availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8899571-L.jpg",
-  },
-  {
-    title: "Atomic Habits",
-    author: "James Clear",
-    isbn: "9780735211292",
-    genre: "Self-help",
-    publishedYear: 2018,
-    availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/9644266-L.jpg",
-  },
-  {
-    title: "Educated",
-    author: "Tara Westover",
-    isbn: "9780399590504",
-    genre: "Memoir",
-    publishedYear: 2018,
-    availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8899571-L.jpg",
-  },
-  {
-    title: "Atomic Habits",
-    author: "James Clear",
-    isbn: "9780735211292",
-    genre: "Self-help",
-    publishedYear: 2018,
-    availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/9644266-L.jpg",
-  },
-  {
-    title: "Educated",
-    author: "Tara Westover",
-    isbn: "9780399590504",
-    genre: "Memoir",
-    publishedYear: 2018,
-    availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8899571-L.jpg",
-  },
-  {
-    title: "Atomic Habits",
-    author: "James Clear",
-    isbn: "9780735211292",
-    genre: "Self-help",
-    publishedYear: 2018,
-    availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/9644266-L.jpg",
-  },
-  {
-    title: "Educated",
-    author: "Tara Westover",
-    isbn: "9780399590504",
-    genre: "Memoir",
-    publishedYear: 2018,
-    availabilityStatus: "Available",
     coverImageUrl: "",
-  },
+  }
 ];
 
 const BookList = () => {
@@ -178,15 +106,14 @@ const BookList = () => {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
         >
-             
-         <img
-  src={book.coverImageUrl || "/images/book_2436702.png"}
-  alt={book.title}
-  className="book-image"
-  style={{
-    height: book.coverImageUrl ? "100%" : "60%"
-  }}
-/>
+          <img
+            src={book.coverImageUrl || "/images/book_2436702.png"}
+            alt={book.title}
+            className="book-image"
+            style={{
+              height: book.coverImageUrl ? "100%" : "60%",
+            }}
+          />
 
           <div className="book-info">
             <h3>{book.title}</h3>

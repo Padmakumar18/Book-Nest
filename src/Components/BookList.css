@@ -8,9 +8,9 @@
 
 .book-card-horizontal {
   display: flex;
-  align-items: center; /* vertically center */
+  align-items: center;
   width: 300px; 
-  height: 200px; 
+  /* height: 200px;  */
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -21,7 +21,6 @@
 
 .book-image {
   width: 40%;
-  /* height: 100%; */
   object-fit: cover;
   border-right: 1px solid #ddd;
 }

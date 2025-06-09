@@ -116,7 +116,7 @@ function Dashboard() {
     },
   ];
 
-   const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     readerName: "",
     date: "",
     bookName: "",
@@ -160,18 +160,7 @@ function Dashboard() {
   };
 
   return (
-      <div className="min-h-screen p-4 md:p-8 bg-gray-100">
-        
-      <div className="buttons mb-6">
-        <button className="button">View all books</button>
-        <button className="button">+ Add new reader</button>
-        <button className="button">+ Add new book</button>
-        <button className="button">Search profile</button>
-        <p className="button">Books to collect: 10+</p>
-      </div>
-
-      <BookList/>
-
+    <div className=" p-4 md:p-8 bg-gray-100">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-bold mb-4 text-center">
