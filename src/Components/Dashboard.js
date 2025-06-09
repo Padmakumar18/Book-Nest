@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Dashboard.css";
+import BookList from "./BookList";
 
 function Dashboard() {
   const mockReaders = [
@@ -160,6 +161,7 @@ function Dashboard() {
 
   return (
       <div className="min-h-screen p-4 md:p-8 bg-gray-100">
+        
       <div className="buttons mb-6">
         <button className="button">View all books</button>
         <button className="button">+ Add new reader</button>
@@ -167,6 +169,8 @@ function Dashboard() {
         <button className="button">Search profile</button>
         <p className="button">Books to collect: 10+</p>
       </div>
+
+      <BookList/>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-lg shadow">
