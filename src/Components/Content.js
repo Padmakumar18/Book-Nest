@@ -87,8 +87,8 @@ function Dashboard() {
                 Book Nmae <span className="text-red-600">*</span>
               </label>
               <select
-                name="readerName"
-                value={formData.readerName}
+                name="bookName"
+                value={formData.bookName}
                 onChange={handleChange}
                 required
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -114,20 +114,6 @@ function Dashboard() {
                 type="date"
                 name="date"
                 value={formData.date}
-                onChange={handleChange}
-                required
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
-                Book Name <span className="text-red-600">*</span>
-              </label>
-              <input
-                type="text"
-                name="bookName"
-                value={formData.bookName}
                 onChange={handleChange}
                 required
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
