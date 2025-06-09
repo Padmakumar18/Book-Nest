@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Content.css";
 import BookList from "./BookList";
-import mockReaders from '../Profiles'
+import mockReaders from "../Profiles";
+import books from "../BooksList";
+import AddNewReader from "./AddNewReader"; 
 
 function Dashboard() {
-  
   const [formData, setFormData] = useState({
     readerName: "",
     date: "",
@@ -50,6 +51,7 @@ function Dashboard() {
 
   return (
     <div className="p-4 md:p-8 bg-gray-100">
+      {/* <AddNewReader/> */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-bold mb-4 text-center">
@@ -75,6 +77,30 @@ function Dashboard() {
                   .map((reader, idx) => (
                     <option key={idx} value={reader.fullName}>
                       {reader.fullName}
+                    </option>
+                  ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
+                Book Nmae <span className="text-red-600">*</span>
+              </label>
+              <select
+                name="readerName"
+                value={formData.readerName}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="" disabled>
+                  Select a reader
+                </option>
+                {books
+                  .sort((a, b) => a.title.localeCompare(b.title))
+                  .map((book, idx) => (
+                    <option key={book.bookNumber} value={book.title}>
+                      {book.title}
                     </option>
                   ))}
               </select>

@@ -2,7 +2,7 @@ const books = [
   {
     title: "The Great Gatsby",
     author: "F. Scott Fitzgerald",
-    isbn: "9780743273565",
+    bookNumber: "1",
     genre: "Classic Fiction",
     publishedYear: 1925,
     availabilityStatus: "Available",
@@ -11,7 +11,7 @@ const books = [
   {
     title: "To Kill a Mockingbird",
     author: "Harper Lee",
-    isbn: "9780061120084",
+    bookNumber: "2",
     genre: "Classic Fiction",
     publishedYear: 1960,
     availabilityStatus: "Checked Out",
@@ -20,7 +20,7 @@ const books = [
   {
     title: "1984",
     author: "George Orwell",
-    isbn: "9780451524935",
+    bookNumber: "3",
     genre: "Dystopian",
     publishedYear: 1949,
     availabilityStatus: "Available",
@@ -29,7 +29,7 @@ const books = [
   {
     title: "The Alchemist",
     author: "Paulo Coelho",
-    isbn: "9780062315007",
+    bookNumber: "4",
     genre: "Adventure",
     publishedYear: 1988,
     availabilityStatus: "Available",
@@ -38,7 +38,7 @@ const books = [
   {
     title: "Sapiens: A Brief History of Humankind",
     author: "Yuval Noah Harari",
-    isbn: "9780062316097",
+    bookNumber: "5",
     genre: "History",
     publishedYear: 2011,
     availabilityStatus: "Checked Out",
@@ -47,7 +47,7 @@ const books = [
   {
     title: "The Catcher in the Rye",
     author: "J.D. Salinger",
-    isbn: "9780316769488",
+    bookNumber: "6",
     genre: "Young Adult",
     publishedYear: 1951,
     availabilityStatus: "Available",
@@ -56,7 +56,7 @@ const books = [
   {
     title: "The Hobbit",
     author: "J.R.R. Tolkien",
-    isbn: "9780547928227",
+    bookNumber: "7",
     genre: "Fantasy",
     publishedYear: 1937,
     availabilityStatus: "Available",
@@ -65,7 +65,7 @@ const books = [
   {
     title: "Becoming",
     author: "Michelle Obama",
-    isbn: "9781524763138",
+    bookNumber: "8",
     genre: "Autobiography",
     publishedYear: 2018,
     availabilityStatus: "Checked Out",
@@ -74,7 +74,7 @@ const books = [
   {
     title: "Atomic Habits",
     author: "James Clear",
-    isbn: "9780735211292",
+    bookNumber: "9",
     genre: "Self-help",
     publishedYear: 2018,
     availabilityStatus: "Available",
@@ -83,7 +83,7 @@ const books = [
   {
     title: "Educated",
     author: "Tara Westover",
-    isbn: "9780399590504",
+    bookNumber: "10",
     genre: "Memoir",
     publishedYear: 2018,
     availabilityStatus: "Available",
