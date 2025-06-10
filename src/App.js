@@ -5,6 +5,8 @@ import Content from "./Components/Content";
 import Loading from "./Components/Loading";
 import AddNewReader from "./Components/AddNewReader";
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [showPopup, setShowPopup] = useState(false);
@@ -17,9 +19,12 @@ function App() {
 
   function logout() {
     console.log("Logout");
+    toast.success("Success Message!");
   }
+
   return (
     <div className="App">
+      <ToastContainer position="top-center" />
       <div>
         <div className="header">
           <p className="title">Book Manager</p>
@@ -39,16 +44,19 @@ function App() {
         <button className="button">Search profile</button>
         <p className="button">Books to collect: 10+</p>
       </div>
-      {showPopup && (
-        <AddNewReader
-          onClose={() => setShowPopup(false)}
-          onAdd={handleAddReader}
-        />
-      )}
 
-      {/* <Login/> */}
-      <Content />
-      {/* <Loading/> */}
+      <div>
+        {showPopup && (
+          <AddNewReader
+            onClose={() => setShowPopup(false)}
+            onAdd={handleAddReader}
+          />
+        )}
+
+        {/* <Login/> */}
+        <Content />
+        {/* <Loading/> */}
+      </div>
     </div>
   );
 }

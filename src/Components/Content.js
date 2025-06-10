@@ -51,7 +51,7 @@ function Dashboard() {
 
   return (
     <div className="p-4 md:p-8 bg-gray-100">
-      {/* <AddNewReader/> */}
+      {/* <BookList/> */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-bold mb-4 text-center">
