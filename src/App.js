@@ -1,25 +1,36 @@
-// import logo from './logo.svg';
-import "./App.css";
+import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Login from "./Components/Login";
 import Content from "./Components/Content";
 import Loading from "./Components/Loading";
 import AddNewReader from "./Components/AddNewReader";
-import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import AddNewBook from "./Components/AddNewBook";
 
 function App() {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(null); 
   const [readers, setReaders] = useState([]);
+  const [books, setBooks] = useState([]);
 
   const handleAddReader = (newReader) => {
     setReaders((prev) => [...prev, newReader]);
-    console.log("New Reader Added:", newReader);
+    toast.success("New reader added successfully!");
+    setShowPopup(null);
+  };
+
+  const handleAddBook = (newBook) => {
+    setBooks((prev) => [...prev, newBook]);
+    toast.success("New book added successfully!");
+    setShowPopup(null);
   };
 
   function logout() {
     console.log("Logout");
-    toast.success("Success Message!");
+    toast.success("Logged out successfully!");
+  }
+
+  function changePage(str) {
+    setShowPopup(str);
   }
 
   return (
@@ -32,30 +43,43 @@ function App() {
             Logout
           </button>
         </div>
-
         <hr />
       </div>
+      
       <div className="buttons mt-6 mb-5">
-        <button className="button">View all books</button>
-        <button className="button" onClick={() => setShowPopup(true)}>
+        <button className="button" onClick={() => changePage("showAllBooks")}>
+          View all books
+        </button>
+        <button className="button" onClick={() => changePage("addNewReader")}>
           + Add new reader
         </button>
-        <button className="button">+ Add new book</button>
-        <button className="button">Search profile</button>
-        <p className="button">Books to collect: 10+</p>
+        <button className="button" onClick={() => changePage("addNewBook")}>
+          + Add new book
+        </button>
+        <button className="button" onClick={() => changePage("showAllProfiles")}>
+          Search profile
+        </button>
+        <button className="button" onClick={() => changePage("bookToCollect")}>
+          Books to collect: 10+
+        </button>
       </div>
 
       <div>
-        {showPopup && (
+        {showPopup === "addNewReader" && (
           <AddNewReader
-            onClose={() => setShowPopup(false)}
+            onClose={() => setShowPopup(null)}
             onAdd={handleAddReader}
           />
         )}
-
-        {/* <Login/> */}
+        
+        {showPopup === "addNewBook" && (
+          <AddNewBook
+            onClose={() => setShowPopup(null)}
+            onAdd={handleAddBook}
+          />
+        )}
+        
         <Content />
-        {/* <Loading/> */}
       </div>
     </div>
   );
