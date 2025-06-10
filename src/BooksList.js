@@ -6,7 +6,7 @@ const books = [
     genre: "Classic Fiction",
     publishedYear: 1925,
     availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/7222246-L.jpg",
+    coverImageUrl: "",
   },
   {
     title: "To Kill a Mockingbird",
@@ -15,7 +15,7 @@ const books = [
     genre: "Classic Fiction",
     publishedYear: 1960,
     availabilityStatus: "Checked Out",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8228691-L.jpg",
+    coverImageUrl: "",
   },
   {
     title: "1984",
@@ -24,7 +24,7 @@ const books = [
     genre: "Dystopian",
     publishedYear: 1949,
     availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/153541-L.jpg",
+    coverImageUrl: "",
   },
   {
     title: "The Alchemist",
@@ -33,7 +33,7 @@ const books = [
     genre: "Adventure",
     publishedYear: 1988,
     availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8108696-L.jpg",
+    coverImageUrl: "",
   },
   {
     title: "Sapiens: A Brief History of Humankind",

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Login from "./Components/Login";
 import Content from "./Components/Content";
-import Loading from "./Components/Loading";
 import AddNewReader from "./Components/AddNewReader";
 import AddNewBook from "./Components/AddNewBook";
 import BookList from "./Components/BookList";
@@ -25,9 +23,13 @@ function App() {
     setShowPopup(null);
   };
 
-  function logout() {
+  const logout = () => {
     toast.success("Logged out successfully!");
-  }
+  };
+
+  const togglePopup = (popupName) => {
+    setShowPopup((prev) => (prev === popupName ? null : popupName));
+  };
 
   return (
     <div className="App">
@@ -41,25 +43,39 @@ function App() {
       <hr />
 
       <div className="buttons mt-6 mb-5">
-        <button className="button" onClick={() => setShowPopup("showAllBooks")}>
-          View all books
+        <button
+          className="button"
+          onClick={() => togglePopup("showAllBooks")}
+        >
+          {showPopup === "showAllBooks" ? "Back Home" : "View all books"}
         </button>
-        <button className="button" onClick={() => setShowPopup("addNewReader")}>
+        <button
+          className="button"
+          onClick={() => setShowPopup("addNewReader")}
+        >
           + Add new reader
         </button>
-        <button className="button" onClick={() => setShowPopup("addNewBook")}>
+        <button
+          className="button"
+          onClick={() => setShowPopup("addNewBook")}
+        >
           + Add new book
         </button>
-        <button className="button" onClick={() => setShowPopup("showAllProfiles")}>
-          Search profile
+        <button
+          className="button"
+          onClick={() => togglePopup("showAllProfiles")}
+        >
+          {showPopup === "showAllProfiles" ? "Back Home" : "Search profile"}
         </button>
-        <button className="button" onClick={() => setShowPopup("bookToCollect")}>
-          Books to collect: 10+
+        <button
+          className="button"
+          onClick={() => togglePopup("bookToCollect")}
+        >
+          {showPopup === "bookToCollect" ? "Back Home" : "Books to collect: 10+"}
         </button>
       </div>
 
       <div>
-        
         {showPopup === "showAllBooks" && <BookList />}
         {showPopup === "addNewReader" && (
           <AddNewReader onClose={() => setShowPopup(null)} onAdd={handleAddReader} />
@@ -71,6 +87,7 @@ function App() {
         {showPopup === "bookToCollect" && <p>Books to collect coming soon...</p>}
 
         {!showPopup && <Content />}
+        
       </div>
     </div>
   );
