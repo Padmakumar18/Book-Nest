@@ -11,6 +11,7 @@ function App() {
   const [showPopup, setShowPopup] = useState(null); 
   const [readers, setReaders] = useState([]);
   const [books, setBooks] = useState([]);
+  const [page, setPage] = useState("Content");
 
   const handleAddReader = (newReader) => {
     setReaders((prev) => [...prev, newReader]);
@@ -73,6 +74,12 @@ function App() {
         )}
         
         {showPopup === "addNewBook" && (
+          <AddNewBook
+            onClose={() => setShowPopup(null)}
+            onAdd={handleAddBook}
+          />
+        )}
+        {page === "content" && (
           <AddNewBook
             onClose={() => setShowPopup(null)}
             onAdd={handleAddBook}
