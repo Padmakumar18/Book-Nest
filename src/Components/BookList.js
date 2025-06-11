@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import "./BookList.css";
+import "./CssFile/BookList.css";
 import books from "../BooksList";
 
 const BookList = () => {

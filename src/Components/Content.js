@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Content.css";
+import "./CssFile/Content.css";
 import BookList from "./BookList";
 import mockReaders from "../Profiles";
 import books from "../BooksList";

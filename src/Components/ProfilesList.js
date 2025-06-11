@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import "./ProfilesList.css";
+import "./CssFile/ProfilesList.css";
 import profiles from "../Profiles";
 
 const ProfileList = () => {

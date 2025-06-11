@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import supabase from '../supabaseClient';
-import './Login.css'; 
+import './CssFile/Login.css'; 
 import toast, { Toaster } from 'react-hot-toast';
 
 function Login() {

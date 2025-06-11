@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./AddNewReader.css";
+import "./CssFile/AddNewReader.css";
 
 function AddNewReader({ onClose, onAdd }) {
   const [formData, setFormData] = useState({
