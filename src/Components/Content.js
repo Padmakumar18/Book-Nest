@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./CssFile/Content.css";
-import BookList from "./BookList";
 import mockReaders from "../Profiles";
 import books from "../BooksList";
 
-function Content({ page }) {
+function Content() {
   const [formData, setFormData] = useState({
     readerName: "",
     date: "",
@@ -25,7 +24,7 @@ function Content({ page }) {
     if (editIndex !== null) {
       const updated = [...bookTakers];
       updated[editIndex] = formData;
-      setBookTakers(updated);
+      setBookTakers(updated); 
       setEditIndex(null);
     } else {
       setBookTakers([...bookTakers, formData]);
@@ -51,10 +50,6 @@ function Content({ page }) {
   return (
     <div className="p-4 md:p-8 bg-gray-100">
 
-      {/* ✅ Conditional Rendering based on page prop */}
-      {page === "showAllBooks" ? (
-        <BookList />
-      ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-bold mb-4 text-center">
@@ -62,7 +57,6 @@ function Content({ page }) {
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
 
-              {/* Form Elements (No changes here) */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
                   Reader Name <span className="text-red-600">*</span>
@@ -199,7 +193,6 @@ function Content({ page }) {
             )}
           </div>
         </div>
-      )}
     </div>
   );
 }

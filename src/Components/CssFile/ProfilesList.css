@@ -2,10 +2,10 @@
   padding: 2rem;
 }
 
-.search-bar {
+/* .search-bar {
   width: 50%;
   margin: auto;
-}
+} */
 
 .search-bar {
   display: flex;

@@ -5,5 +5,4 @@ const supabaseAnonKey = process.env.REACT_APP_SUPABASE_PUBLIC_KEY;
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-
 export default supabase;

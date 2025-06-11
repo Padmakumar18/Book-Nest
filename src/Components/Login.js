@@ -1,48 +1,58 @@
-import React, { useState } from 'react';
-import supabase from '../supabaseClient';
-import './CssFile/Login.css'; 
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import supabase from "../supabaseClient";
+import "./CssFile/Login.css";
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [user, setUser] = useState(null);
+
+  
 
   const handleAuth = async (e) => {
     e.preventDefault();
-    setMessage('');
+    setMessage("");
 
     if (isSignUp) {
+      localStorage.setItem("library-management-email", email);
+      localStorage.setItem("library-management-pass", password);
       const { error } = await supabase.auth.signUp({ email, password });
-      if(error) {
+      if (error) {
         toast.error("Try again");
-        console.error(error.message)
+        console.error(error.message);
       } else {
-        toast.success('Signup successful! Check your email.')
+        toast.success("Signup successful! Check your email.");
       }
     } else {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if(error) {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
         toast.error("Try again");
-        console.error(error.message)
+        console.error(error.message);
       } else {
-        toast.success('Login successful.')
+        toast.success("Login successful.");
       }
     }
   };
 
   return (
     <div className="auth-container">
-      <Toaster position="top-center" reverseOrder={false}/>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="auth-card">
         <h2 className="auth-title">
-          {isSignUp ? 'Create an Account' : 'Welcome Back'}
+          {isSignUp ? "Create an Account" : "Welcome Back"}
         </h2>
 
         <form onSubmit={handleAuth} className="auth-form">
           <div>
-            <label className="auth-label" htmlFor="email">Email</label>
+            <label className="auth-label" htmlFor="email">
+              Email
+            </label>
             <input
               id="email"
               type="email"
@@ -55,7 +65,9 @@ function Login() {
           </div>
 
           <div>
-            <label className="auth-label" htmlFor="password">Password</label>
+            <label className="auth-label" htmlFor="password">
+              Password
+            </label>
             <input
               id="password"
               type="password"
@@ -68,7 +80,7 @@ function Login() {
           </div>
 
           <button type="submit" className="auth-button">
-            {isSignUp ? 'Sign Up' : 'Login'}
+            {isSignUp ? "Sign Up" : "Login"}
           </button>
         </form>
 
@@ -79,18 +91,22 @@ function Login() {
             onClick={() => setIsSignUp(!isSignUp)}
             className="auth-toggle-button"
           >
-            {isSignUp ? 'Login' : 'Sign Up'}
+            {isSignUp ? "Login" : "Sign Up"}
           </button>
         </div>
 
         {message && (
-          <p className={`auth-message ${message.includes('successful') ? 'success' : 'error'}`}>
+          <p
+            className={`auth-message ${
+              message.includes("successful") ? "success" : "error"
+            }`}
+          >
             {message}
           </p>
         )}
       </div>
     </div>
   );
-};
+}
 
 export default Login;
