@@ -6,7 +6,6 @@ const books = [
     genre: "Classic Fiction",
     publishedYear: 1925,
     availabilityStatus: "Available",
-    coverImageUrl: "",
   },
   {
     title: "To Kill a Mockingbird",
@@ -15,7 +14,6 @@ const books = [
     genre: "Classic Fiction",
     publishedYear: 1960,
     availabilityStatus: "Checked Out",
-    coverImageUrl: "",
   },
   {
     title: "1984",
@@ -24,7 +22,6 @@ const books = [
     genre: "Dystopian",
     publishedYear: 1949,
     availabilityStatus: "Available",
-    coverImageUrl: "",
   },
   {
     title: "The Alchemist",
@@ -33,7 +30,6 @@ const books = [
     genre: "Adventure",
     publishedYear: 1988,
     availabilityStatus: "Available",
-    coverImageUrl: "",
   },
   {
     title: "Sapiens: A Brief History of Humankind",
@@ -42,7 +38,6 @@ const books = [
     genre: "History",
     publishedYear: 2011,
     availabilityStatus: "Checked Out",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8774991-L.jpg",
   },
   {
     title: "The Catcher in the Rye",
@@ -51,7 +46,6 @@ const books = [
     genre: "Young Adult",
     publishedYear: 1951,
     availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8225631-L.jpg",
   },
   {
     title: "The Hobbit",
@@ -60,7 +54,6 @@ const books = [
     genre: "Fantasy",
     publishedYear: 1937,
     availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/8108698-L.jpg",
   },
   {
     title: "Becoming",
@@ -69,7 +62,6 @@ const books = [
     genre: "Autobiography",
     publishedYear: 2018,
     availabilityStatus: "Checked Out",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/9253448-L.jpg",
   },
   {
     title: "Atomic Habits",
@@ -78,7 +70,6 @@ const books = [
     genre: "Self-help",
     publishedYear: 2018,
     availabilityStatus: "Available",
-    coverImageUrl: "https://covers.openlibrary.org/b/id/9644266-L.jpg",
   },
   {
     title: "Educated",
@@ -87,7 +78,6 @@ const books = [
     genre: "Memoir",
     publishedYear: 2018,
     availabilityStatus: "Available",
-    coverImageUrl: "",
   }
 ];
 

@@ -5,6 +5,7 @@ import Content from "./Components/Content";
 import AddNewReader from "./Components/AddNewReader";
 import AddNewBook from "./Components/AddNewBook";
 import BookList from "./Components/BookList";
+import ProfileList from "./Components/ProfilesList";
 
 function App() {
   const [showPopup, setShowPopup] = useState(null);
@@ -83,7 +84,7 @@ function App() {
         {showPopup === "addNewBook" && (
           <AddNewBook onClose={() => setShowPopup(null)} onAdd={handleAddBook} />
         )}
-        {showPopup === "showAllProfiles" && <p>Search profile coming soon...</p>}
+        {showPopup === "showAllProfiles" && <ProfileList/>}
         {showPopup === "bookToCollect" && <p>Books to collect coming soon...</p>}
 
         {!showPopup && <Content />}
