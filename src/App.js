@@ -28,11 +28,14 @@ function App() {
   };
 
   useEffect(() => {
+    // console.log(localStorage.getItem("library-management-email"))
     setshowPage("Loading");
     const localStorageEmail = localStorage.getItem("library-management-email");
     const localStoragePass = localStorage.getItem("library-management-pass");
     if (localStorageEmail && localStoragePass) {
       autoLogin(localStorageEmail, localStoragePass);
+    } else {
+      setshowPage("Login");
     }
   }, []);
 
@@ -51,7 +54,6 @@ function App() {
     }
   };
 
-
   const logout = async () => {
     localStorage.removeItem("library-management-email");
     localStorage.removeItem("library-management-pass");
@@ -61,6 +63,7 @@ function App() {
       toast.error("Try again");
     } else {
       toast.success("Logged out successfully!");
+      setshowPage("Login");
     }
   };
 
@@ -123,8 +126,8 @@ function App() {
       )}
 
       <div>
-        {showPage === "Login" && <Login />}
-        {showPage == "Content" && <Content />}
+        {showPage === "Login" && <Login setshowPage={setshowPage} />}
+        {showPage === "Content" && <Content />}
         {showPage === "Loading" && <Loading />}
         {showPage === "showAllBooks" && <BookList />}
         {showPage === "addNewReader" && (
@@ -134,7 +137,10 @@ function App() {
           />
         )}
         {showPage === "addNewBook" && (
-          <AddNewBook onClose={() => setshowPage("Content")} onAdd={handleAddBook} />
+          <AddNewBook
+            onClose={() => setshowPage("Content")}
+            onAdd={handleAddBook}
+          />
         )}
         {showPage === "showAllProfiles" && <ProfileList />}
         {showPage === "bookToCollect" && <p>Books to collect coming soon...</p>}

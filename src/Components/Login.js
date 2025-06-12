@@ -3,14 +3,11 @@ import supabase from "../supabaseClient";
 import "./CssFile/Login.css";
 import toast, { Toaster } from "react-hot-toast";
 
-function Login() {
+function Login({setshowPage}) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [user, setUser] = useState(null);
-
-  
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -36,6 +33,7 @@ function Login() {
         console.error(error.message);
       } else {
         toast.success("Login successful.");
+        setshowPage("Content");
       }
     }
   };
