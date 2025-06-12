@@ -29,7 +29,7 @@ function Login({setshowPage}) {
         password,
       });
       if (error) {
-        toast.error("Try again");
+        toast.error("Invalid User");
         console.error(error.message);
       } else {
         toast.success("Login successful.");

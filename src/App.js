@@ -35,7 +35,7 @@ function App() {
     if (localStorageEmail && localStoragePass) {
       autoLogin(localStorageEmail, localStoragePass);
     } else {
-      setshowPage("Login");
+      setshowPage("Login"); 
     }
   }, []);
 
@@ -74,7 +74,7 @@ function App() {
   return (
     <div className="App">
       <ToastContainer position="top-center" />
-      {showPage !== "Login" && (
+      {showPage !== "Login" && showPage !== "Loading" && (
         <>
           <div className="header">
             <p className="title">Book Manager</p>
