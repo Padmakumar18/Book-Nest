@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import Content from "./Components/Content";
 import AddNewReader from "./Components/AddNewReader";
 import AddNewBook from "./Components/AddNewBook";
@@ -8,8 +10,10 @@ import BookList from "./Components/BookList";
 import ProfileList from "./Components/ProfilesList";
 import Loading from "./Components/Loading";
 import Login from "./Components/Login";
-import supabase from "./supabaseClient";
 import BooksToCollectList from "./Components/BooksToCollectList";
+
+import supabase from "./supabaseClient";
+import { needToCollect } from "./NeedToCollect";
 
 function App() {
   const [showPage, setshowPage] = useState(null);
@@ -120,7 +124,7 @@ function App() {
             >
               {showPage === "bookToCollect"
                 ? "Back Home"
-                : "Books to collect: 10+"}
+                : `Books to collect: ${needToCollect && needToCollect.length !== 0 ? needToCollect.length : 0}`}
             </button>
           </div>
         </>
