@@ -9,6 +9,7 @@ import ProfileList from "./Components/ProfilesList";
 import Loading from "./Components/Loading";
 import Login from "./Components/Login";
 import supabase from "./supabaseClient";
+import BooksToCollectList from "./Components/BooksToCollectList";
 
 function App() {
   const [showPage, setshowPage] = useState(null);
@@ -143,7 +144,7 @@ function App() {
           />
         )}
         {showPage === "showAllProfiles" && <ProfileList />}
-        {showPage === "bookToCollect" && <p>Books to collect coming soon...</p>}
+        {showPage === "bookToCollect" && <BooksToCollectList/>}
       </div>
     </div>
   );
