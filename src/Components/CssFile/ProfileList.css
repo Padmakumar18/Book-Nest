@@ -1,11 +1,6 @@
-.profile-container {
+.container {
   padding: 2rem;
 }
-
-/* .search-bar {
-  width: 50%;
-  margin: auto;
-} */
 
 .search-bar {
   display: flex;
@@ -35,33 +30,61 @@
   background-color: #0056b3;
 }
 
-.profile-list {
+.list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
-.profile-card {
+.card-horizontal {
+  display: flex;
+  align-items: center;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.profile-card:hover {
-  transform: translateY(-5px);
+.card-horizontal:hover {
+  transform: scale(1.05);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.profile-header {
-  margin-bottom: 1rem;
+.card-image {
+  width: 40%;
+  object-fit: cover;
+  border-right: 1px solid #ddd;
 }
 
-.profile-header h2 {
-  margin: 0;
-  font-size: 1.4rem;
+.card-info {
+  padding: 12px 16px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-info h2, .card-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
   color: #333;
+}
+
+.card-info p {
+  margin: 2px 0;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.available {
+  color: green;
+  font-weight: bold;
+}
+
+.checked-out {
+  color: red;
+  font-weight: bold;
 }
 
 .membership {
@@ -69,17 +92,9 @@
   color: #666;
 }
 
-.profile-body p {
-  margin: 0.4rem 0;
-  color: #444;
-}
-
-.profile-body strong {
-  color: #222;
-}
-
 .no-results {
-  color: #888;
-  font-size: 1.1rem;
   text-align: center;
+  color: #777;
+  margin-top: 2rem;
+  font-size: 1.1rem;
 }

@@ -14,14 +14,14 @@ function Login({setshowPage}) {
     setMessage("");
 
     if (isSignUp) {
-      localStorage.setItem("library-management-email", email);
-      localStorage.setItem("library-management-pass", password);
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) {
         toast.error("Try again");
         console.error(error.message);
       } else {
         toast.success("Signup successful! Check your email.");
+        localStorage.setItem("library-management-email", email);
+      localStorage.setItem("library-management-pass", password);
       }
     } else {
       const { error } = await supabase.auth.signInWithPassword({
@@ -33,6 +33,8 @@ function Login({setshowPage}) {
         console.error(error.message);
       } else {
         toast.success("Login successful.");
+        localStorage.setItem("library-management-email", email);
+      localStorage.setItem("library-management-pass", password);
         setshowPage("Content");
       }
     }

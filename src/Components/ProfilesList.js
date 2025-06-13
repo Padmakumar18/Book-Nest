@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import "./CssFile/ProfilesList.css";
+import "./CssFile/ProfileList.css"; // ✅ Same CSS file for both
 import profiles from "../Profiles";
 
 const ProfileList = () => {
@@ -11,10 +11,9 @@ const ProfileList = () => {
   );
 
   return (
-    <div className="profile-container">
+    <div className="container">
       <div className="search-bar">
         <input
-        className="search-bar"
           type="text"
           placeholder="Search by Name..."
           value={searchQuery}
@@ -23,22 +22,19 @@ const ProfileList = () => {
         <button onClick={() => setSearchQuery("")}>Clear</button>
       </div>
 
-      <div className="profile-list">
+      <div className="list">
         {filteredProfiles.length > 0 ? (
           filteredProfiles.map((profile, index) => (
             <motion.div
-              className="profile-card"
+              className="card-horizontal"
               key={index}
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
             >
-              <div className="profile-header">
+              <div className="card-info">
                 <h2>{profile.fullName}</h2>
                 <p className="membership">{profile.membershipType}</p>
-              </div>
-
-              <div className="profile-body">
                 <p><strong>Gender:</strong> {profile.gender}</p>
                 <p><strong>DOB:</strong> {profile.dateOfBirth}</p>
                 <p><strong>Contact:</strong> {profile.contactNumber}</p>

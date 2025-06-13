@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import "./CssFile/BookList.css";
+import "./CssFile/BookList.css"; 
 import books from "../BooksList";
 
 const BookList = () => {
@@ -13,7 +13,7 @@ const BookList = () => {
   );
 
   return (
-    <div className="book-list-container">
+    <div className="container">
       <div className="search-bar">
         <input
           type="text"
@@ -24,38 +24,28 @@ const BookList = () => {
         <button onClick={() => setSearchQuery("")}>Clear</button>
       </div>
 
-      <div className="book-list">
+      <div className="list">
         {filteredBooks.length > 0 ? (
           filteredBooks.map((book, index) => (
             <motion.div
-              className="book-card-horizontal"
+              className="card-horizontal"
               key={index}
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
             >
-              {/* <img
+              <img
                 src={"/images/book_2436702.png"}
                 alt={book.title}
-                className="book-image"
-                style={{
-                  height:"50%",
-                }}
-              /> */}
-
-              <div className="book-info">
+                className="card-image"
+              />
+              <div className="card-info">
                 <h3>{book.title}</h3>
                 <p><strong>Author:</strong> {book.author}</p>
                 <p><strong>Genre:</strong> {book.genre}</p>
                 <p><strong>ISBN:</strong> {book.isbn}</p>
                 <p><strong>Year:</strong> {book.publishedYear}</p>
-                <p
-                  className={
-                    book.availabilityStatus === "Available"
-                      ? "available"
-                      : "checked-out"
-                  }
-                >
+                <p className={book.availabilityStatus === "Available" ? "available" : "checked-out"}>
                   {book.availabilityStatus}
                 </p>
               </div>
