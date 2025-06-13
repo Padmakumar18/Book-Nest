@@ -68,28 +68,21 @@
 .card-info h2, .card-info h3 {
   margin: 0 0 8px 0;
   font-size: 1.2rem;
-  color: #333;
 }
 
 .card-info p {
   margin: 2px 0;
   font-size: 0.9rem;
-  color: #444;
 }
 
-.available {
-  color: green;
+.lost {
+  color: gray;
   font-weight: bold;
 }
 
-.checked-out {
-  color: red;
+.being-repaired {
+  color: purple;
   font-weight: bold;
-}
-
-.membership {
-  font-size: 0.9rem;
-  color: #666;
 }
 
 .no-results {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CssFile/AddNewReader.css";
+import "./CssFile/PopupForm.css";
 
 function AddNewReader({ onClose, onAdd }) {
   const [formData, setFormData] = useState({
@@ -28,9 +28,10 @@ function AddNewReader({ onClose, onAdd }) {
   return (
     <div className="popup-overlay">
       <div className="popup-content">
-        <h2 className="title">Add New Reader</h2>
-        <form onSubmit={handleSubmit} className="form">
+        <h2 className="popup-title">Add New Reader</h2>
+        <form onSubmit={handleSubmit} className="popup-form">
           <input
+            className="popup-input"
             type="text"
             name="fullName"
             placeholder="Full Name"
@@ -39,6 +40,7 @@ function AddNewReader({ onClose, onAdd }) {
             required
           />
           <select
+            className="popup-select"
             name="gender"
             value={formData.gender}
             onChange={handleChange}
@@ -50,6 +52,7 @@ function AddNewReader({ onClose, onAdd }) {
             <option value="Other">Other</option>
           </select>
           <input
+            className="popup-input"
             type="date"
             name="dateOfBirth"
             value={formData.dateOfBirth}
@@ -57,6 +60,7 @@ function AddNewReader({ onClose, onAdd }) {
             required
           />
           <input
+            className="popup-input"
             type="tel"
             name="contactNumber"
             placeholder="Contact Number"
@@ -65,6 +69,7 @@ function AddNewReader({ onClose, onAdd }) {
             required
           />
           <input
+            className="popup-input"
             type="email"
             name="emailAddress"
             placeholder="Email Address"
@@ -73,6 +78,7 @@ function AddNewReader({ onClose, onAdd }) {
             required
           />
           <textarea
+            className="popup-textarea"
             name="address"
             placeholder="Address"
             value={formData.address}
@@ -81,6 +87,7 @@ function AddNewReader({ onClose, onAdd }) {
             required
           />
           <input
+            className="popup-input"
             type="text"
             name="idProof"
             placeholder="ID Proof (e.g., PAN)"
@@ -89,6 +96,7 @@ function AddNewReader({ onClose, onAdd }) {
             required
           />
           <select
+            className="popup-select"
             name="membershipType"
             value={formData.membershipType}
             onChange={handleChange}
@@ -99,19 +107,12 @@ function AddNewReader({ onClose, onAdd }) {
             <option value="Institution">Institution</option>
             <option value="Premium">Premium</option>
           </select>
-          <input
-            type="text"
-            name="institution"
-            placeholder="Institution (optional)"
-            value={formData.institution}
-            onChange={handleChange}
-          />
 
-          <div className="buttons">
-            <button type="button" onClick={onClose} className="remainder">
+          <div className="popup-buttons">
+            <button type="button" onClick={onClose} className="cancel-button">
               Cancel
             </button>
-            <button type="submit" className="button">
+            <button type="submit" className="submit-button">
               Add Reader
             </button>
           </div>

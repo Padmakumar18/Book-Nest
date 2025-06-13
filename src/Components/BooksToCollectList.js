@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { needToCollect } from "../NeedToCollect";
 
 const BooksToCollectList = () => {
@@ -10,7 +11,6 @@ const BooksToCollectList = () => {
     setBookTakers(updatedList);
   };
 
-  // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split("T")[0];
 
   return (
@@ -19,42 +19,53 @@ const BooksToCollectList = () => {
       {bookTakers.length === 0 ? (
         <p className="text-gray-500 italic">No entries yet.</p>
       ) : (
-        <table className="min-w-full border border-gray-300 text-sm">
-          <thead className="bg-gray-200 text-left">
-            <tr>
-              <th className="px-4 py-2 border">#</th>
-              <th className="px-4 py-2 border">Reader Name</th>
-              <th className="px-4 py-2 border">Book Name</th>
-              <th className="px-4 py-2 border">Taken Date</th>
-              <th className="px-4 py-2 border">Last Day</th>
-              <th className="px-4 py-2 border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookTakers.map((taker, index) => {
-              const isDueToday = taker.lastDay === today;
-              const rowColor = isDueToday ? "bg-red-100" : "bg-green-100";
+        <div className="overflow-x-auto">
+          <table className="min-w-full border border-gray-300 text-sm">
+            <thead className="bg-gray-200 text-left">
+              <tr>
+                <th className="px-4 py-2 border">#</th>
+                <th className="px-4 py-2 border">Reader Name</th>
+                <th className="px-4 py-2 border">Book Name</th>
+                <th className="px-4 py-2 border">Taken Date</th>
+                <th className="px-4 py-2 border">Last Day</th>
+                <th className="px-4 py-2 border">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <AnimatePresence>
+                {bookTakers.map((taker, index) => {
+                  const isDueToday = taker.lastDay === today;
+                  const rowColor = isDueToday ? "bg-red-100" : "bg-green-100";
 
-              return (
-                <tr key={index} className={`${rowColor} even:bg-opacity-75`}>
-                  <td className="px-4 py-2 border">{index + 1}</td>
-                  <td className="px-4 py-2 border">{taker.takenBy}</td>
-                  <td className="px-4 py-2 border">{taker.bookName}</td>
-                  <td className="px-4 py-2 border">{taker.takenDate}</td>
-                  <td className="px-4 py-2 border">{taker.lastDay}</td>
-                  <td className="px-4 py-2 border">
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="text-red-600 hover:underline"
+                  return (
+                    <motion.tr
+                      key={taker.id || index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      className={`${rowColor} even:bg-opacity-75`}
                     >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                      <td className="px-4 py-2 border">{index + 1}</td>
+                      <td className="px-4 py-2 border">{taker.takenBy}</td>
+                      <td className="px-4 py-2 border">{taker.bookName}</td>
+                      <td className="px-4 py-2 border">{taker.takenDate}</td>
+                      <td className="px-4 py-2 border">{taker.lastDay}</td>
+                      <td className="px-4 py-2 border">
+                        <button
+                          onClick={() => handleDelete(index)}
+                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </motion.tr>
+                  );
+                })}
+              </AnimatePresence>
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CssFile/AddNewBook.css";
+import "./CssFile/PopupForm.css";
 
 function AddNewBook({ onClose, onAdd }) {
   const [formData, setFormData] = useState({
@@ -9,7 +9,7 @@ function AddNewBook({ onClose, onAdd }) {
     genre: "",
     publishedYear: "",
     availabilityStatus: "Available",
-    coverImageUrl: ""
+    coverImageUrl: "",
   });
 
   const genres = [
@@ -21,7 +21,7 @@ function AddNewBook({ onClose, onAdd }) {
     "Non-Fiction",
     "Biography",
     "History",
-    "Children's"
+    "Children's",
   ];
 
   const statusOptions = [
@@ -29,7 +29,7 @@ function AddNewBook({ onClose, onAdd }) {
     "Checked Out",
     "On Hold",
     "Lost",
-    "Being Repaired"
+    "Being Repaired",
   ];
 
   const handleChange = (e) => {
@@ -42,17 +42,19 @@ function AddNewBook({ onClose, onAdd }) {
     const processedData = {
       ...formData,
       bookNumber: parseInt(formData.bookNumber),
-      publishedYear: parseInt(formData.publishedYear)
+      publishedYear: parseInt(formData.publishedYear),
     };
     onAdd(processedData);
+    onClose();
   };
 
   return (
     <div className="popup-overlay">
       <div className="popup-content">
-        <h2 className="title">Add New Book</h2>
-        <form onSubmit={handleSubmit} className="form">
+        <h2 className="popup-title">Add New Book</h2>
+        <form onSubmit={handleSubmit} className="popup-form">
           <input
+            className="popup-input"
             type="text"
             name="title"
             placeholder="Title"
@@ -60,8 +62,8 @@ function AddNewBook({ onClose, onAdd }) {
             onChange={handleChange}
             required
           />
-          
           <input
+            className="popup-input"
             type="text"
             name="author"
             placeholder="Author"
@@ -69,18 +71,8 @@ function AddNewBook({ onClose, onAdd }) {
             onChange={handleChange}
             required
           />
-          
-          <input
-            type="number"
-            name="bookNumber"
-            placeholder="Book Number"
-            value={formData.bookNumber}
-            onChange={handleChange}
-            required
-            min="1"
-          />
-          
           <select
+            className="popup-select"
             name="genre"
             value={formData.genre}
             onChange={handleChange}
@@ -88,11 +80,13 @@ function AddNewBook({ onClose, onAdd }) {
           >
             <option value="">Select Genre</option>
             {genres.map((genre) => (
-              <option key={genre} value={genre}>{genre}</option>
+              <option key={genre} value={genre}>
+                {genre}
+              </option>
             ))}
           </select>
-          
           <input
+            className="popup-input"
             type="number"
             name="publishedYear"
             placeholder="Published Year"
@@ -102,19 +96,21 @@ function AddNewBook({ onClose, onAdd }) {
             min="1800"
             max={new Date().getFullYear()}
           />
-          
           <select
+            className="popup-select"
             name="availabilityStatus"
             value={formData.availabilityStatus}
             onChange={handleChange}
             required
           >
             {statusOptions.map((status) => (
-              <option key={status} value={status}>{status}</option>
+              <option key={status} value={status}>
+                {status}
+              </option>
             ))}
           </select>
-          
-          <input
+          {/* <input
+            className="popup-input"
             type="url"
             name="coverImageUrl"
             placeholder="Cover Image URL"
@@ -122,22 +118,20 @@ function AddNewBook({ onClose, onAdd }) {
             onChange={handleChange}
             required
           />
-          
           {formData.coverImageUrl && (
             <div className="image-preview">
-              <p>Cover Preview:</p>
-              <img 
-                src={formData.coverImageUrl} 
-                alt="Book cover preview" 
-                style={{ maxWidth: "100px", maxHeight: "150px" }}
-                onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/100x150?text=No+Cover";
-                }}
+              <img
+                src={formData.coverImageUrl}
+                alt="Cover Preview"
+                onError={(e) =>
+                  (e.target.src =
+                    "https://via.placeholder.com/100x150?text=No+Cover")
+                }
               />
             </div>
-          )}
+          )} */}
 
-          <div className="buttons">
+          <div className="popup-buttons">
             <button type="button" onClick={onClose} className="cancel-button">
               Cancel
             </button>

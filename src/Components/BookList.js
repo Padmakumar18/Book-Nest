@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import "./CssFile/BookList.css"; 
+import "./CssFile/BookList.css";
 import books from "../BooksList";
 
 const BookList = () => {
@@ -41,11 +41,25 @@ const BookList = () => {
               />
               <div className="card-info">
                 <h3>{book.title}</h3>
-                <p><strong>Author:</strong> {book.author}</p>
-                <p><strong>Genre:</strong> {book.genre}</p>
-                <p><strong>ISBN:</strong> {book.isbn}</p>
-                <p><strong>Year:</strong> {book.publishedYear}</p>
-                <p className={book.availabilityStatus === "Available" ? "available" : "checked-out"}>
+                <p>
+                  <strong>Author:</strong> {book.author}
+                </p>
+                <p>
+                  <strong>Genre:</strong> {book.genre}
+                </p>
+                <p>
+                  <strong>ISBN:</strong> {book.isbn}
+                </p>
+                <p>
+                  <strong>Year:</strong> {book.publishedYear}
+                </p>
+                <p
+                  className={`font-bold ${
+                    book.availabilityStatus === "Available"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
                   {book.availabilityStatus}
                 </p>
               </div>
