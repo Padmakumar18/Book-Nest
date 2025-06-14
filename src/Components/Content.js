@@ -6,9 +6,9 @@ import books from "../BooksList";
 function Content() {
   const [formData, setFormData] = useState({
     readerName: "",
-    date: "",
+    from_date: "",
     bookName: "",
-    days: "",
+    last_date: "",
   });
 
   const [bookTakers, setBookTakers] = useState([]);
@@ -33,7 +33,7 @@ function Content() {
   };
 
   const handleClear = () => {
-    setFormData({ readerName: "", date: "", bookName: "", days: "" });
+    setFormData({ readerName: "", from_date: "", bookName: "", last_date: "" });
     setEditIndex(null);
   };
 
@@ -103,19 +103,32 @@ function Content() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
-                  Date <span className="text-red-600">*</span>
+                  From Date <span className="text-red-600">*</span>
                 </label>
                 <input
                   type="date"
                   name="date"
-                  value={formData.date}
+                  value={formData.from_date}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
+                  Last Date <span className="text-red-600">*</span>
+                </label>
+                <input
+                  type="date"
+                  name="date"
+                  value={formData.last_date}
                   onChange={handleChange}
                   required
                   className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
                   Number of Days <span className="text-red-600">*</span>
                 </label>
@@ -128,7 +141,7 @@ function Content() {
                   min={1}
                   className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-              </div>
+              </div> */}
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
@@ -159,8 +172,8 @@ function Content() {
                     <th className="px-4 py-2 border">#</th>
                     <th className="px-4 py-2 border">Reader Name</th>
                     <th className="px-4 py-2 border">Book Name</th>
-                    <th className="px-4 py-2 border">Date</th>
-                    <th className="px-4 py-2 border">Days</th>
+                    <th className="px-4 py-2 border">From Date</th>
+                    <th className="px-4 py-2 border">Last Date</th>
                     <th className="px-4 py-2 border">Actions</th>
                   </tr>
                 </thead>
@@ -170,8 +183,8 @@ function Content() {
                       <td className="px-4 py-2 border">{index + 1}</td>
                       <td className="px-4 py-2 border">{taker.readerName}</td>
                       <td className="px-4 py-2 border">{taker.bookName}</td>
-                      <td className="px-4 py-2 border">{taker.date}</td>
-                      <td className="px-4 py-2 border">{taker.days}</td>
+                      <td className="px-4 py-2 border">{taker.from_date}</td>
+                      <td className="px-4 py-2 border">{taker.last_date}</td>
                       <td className="px-4 py-2 border flex gap-2">
                         <button
                           onClick={() => handleEdit(index)}
