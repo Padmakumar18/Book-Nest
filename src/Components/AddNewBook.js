@@ -9,7 +9,7 @@ function AddNewBook({ onClose, onAdd }) {
     genre: "",
     publishedYear: "",
     availabilityStatus: "Available",
-    coverImageUrl: "",
+    numberOfCopies: "",
   });
 
   const genres = [
@@ -95,6 +95,15 @@ function AddNewBook({ onClose, onAdd }) {
             required
             min="1800"
             max={new Date().getFullYear()}
+          />
+          <input
+            className="popup-input"
+            type="number"
+            name="Number of copies"
+            placeholder="Number of copies"
+            value={formData.numberOfCopies}
+            onChange={handleChange}
+            required
           />
           <select
             className="popup-select"

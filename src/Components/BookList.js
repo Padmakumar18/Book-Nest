@@ -48,10 +48,13 @@ const BookList = () => {
                   <strong>Genre:</strong> {book.genre}
                 </p>
                 <p>
-                  <strong>ISBN:</strong> {book.isbn}
+                  <strong>Book No:</strong> {book.bookNumber}
                 </p>
                 <p>
                   <strong>Year:</strong> {book.publishedYear}
+                </p>
+                <p>
+                  <strong>Number of copies:</strong> {book.numberOfCopies}
                 </p>
                 <p
                   className={`font-bold ${

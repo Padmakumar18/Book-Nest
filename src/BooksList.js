@@ -6,6 +6,7 @@ const books = [
     genre: "Classic Fiction",
     publishedYear: 1925,
     availabilityStatus: "Available",
+    numberOfCopies: 3
   },
   {
     title: "To Kill a Mockingbird",
@@ -14,6 +15,7 @@ const books = [
     genre: "Classic Fiction",
     publishedYear: 1960,
     availabilityStatus: "Checked Out",
+    numberOfCopies: 3
   },
   {
     title: "1984",
@@ -22,6 +24,7 @@ const books = [
     genre: "Dystopian",
     publishedYear: 1949,
     availabilityStatus: "Available",
+    numberOfCopies: 3
   },
   {
     title: "The Alchemist",
@@ -30,6 +33,7 @@ const books = [
     genre: "Adventure",
     publishedYear: 1988,
     availabilityStatus: "Available",
+    numberOfCopies: 3
   },
   {
     title: "Sapiens: A Brief History of Humankind",
@@ -38,6 +42,7 @@ const books = [
     genre: "History",
     publishedYear: 2011,
     availabilityStatus: "Checked Out",
+    numberOfCopies: 3
   },
   {
     title: "The Catcher in the Rye",
@@ -46,6 +51,7 @@ const books = [
     genre: "Young Adult",
     publishedYear: 1951,
     availabilityStatus: "Available",
+    numberOfCopies: 3
   },
   {
     title: "The Hobbit",
@@ -54,6 +60,7 @@ const books = [
     genre: "Fantasy",
     publishedYear: 1937,
     availabilityStatus: "Available",
+    numberOfCopies: 3
   },
   {
     title: "Becoming",
@@ -62,6 +69,7 @@ const books = [
     genre: "Autobiography",
     publishedYear: 2018,
     availabilityStatus: "Checked Out",
+    numberOfCopies: 3
   },
   {
     title: "Atomic Habits",
@@ -70,6 +78,7 @@ const books = [
     genre: "Self-help",
     publishedYear: 2018,
     availabilityStatus: "Available",
+    numberOfCopies: 3
   },
   {
     title: "Educated",
@@ -78,6 +87,7 @@ const books = [
     genre: "Memoir",
     publishedYear: 2018,
     availabilityStatus: "Available",
+    numberOfCopies: 3
   }
 ];
 
