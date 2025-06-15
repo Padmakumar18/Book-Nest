@@ -15,6 +15,18 @@ import BooksToCollectList from "./Components/BooksToCollectList";
 import supabase from "./supabaseClient";
 import { needToCollect } from "./NeedToCollect";
 
+// const { data, error } = await supabase
+//   .from('books_list')
+//   .select('*')
+//   .eq('user_id', user.id);
+
+// const { data, error } = await supabase
+//   .from('readers')
+//   .select('*')
+//   .eq('user_id', user.id);
+
+
+
 function App() {
   const [showPage, setshowPage] = useState(null);
   const [readers, setReaders] = useState([]);

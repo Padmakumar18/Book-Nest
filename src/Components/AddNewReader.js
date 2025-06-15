@@ -11,7 +11,6 @@ function AddNewReader({ onClose, onAdd }) {
     address: "",
     idProof: "",
     membershipType: "",
-    institution: "",
   });
 
   const handleChange = (e) => {

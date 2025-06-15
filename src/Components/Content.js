@@ -6,8 +6,8 @@ import books from "../BooksList";
 function Content() {
   const [formData, setFormData] = useState({
     readerName: "",
-    from_date: "",
     bookName: "",
+    from_date: "",
     last_date: "",
   });
 
