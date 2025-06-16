@@ -21,6 +21,7 @@ function App() {
   const [readers, setReaders] = useState([]);
   const [bookTakers, setbookTakers] = useState([]);
   const [userId, setUserId] = useState("");
+  const [lastBookNumber, setlastBookNumber] = useState(0);
 
   useEffect(() => {
     setshowPage("Loading");
@@ -32,10 +33,6 @@ function App() {
       setshowPage("Login");
     }
   }, []);
-
-  // useEffect(() => {
-  //   console.log(bookTakers);
-  // }, [bookTakers]);
 
   async function fetchBooks() {
     const {
@@ -64,7 +61,15 @@ function App() {
       console.error("Error fetching books:", error);
     } else {
       setBooks(data);
+      setlastBookNumber(getLastBookNumber(data));
     }
+  }
+
+  function getLastBookNumber(books) {
+    return books.reduce(
+      (max, book) => (book.book_number > max ? book.book_number : max),
+      0
+    );
   }
 
   async function fetchProfiles() {
@@ -120,15 +125,18 @@ function App() {
       console.error("Error fetching profiles:", error);
     } else {
       setbookTakers(data);
-      console.log("bookTakers")
-      console.log(bookTakers)
+      console.log("bookTakers");
+      console.log(bookTakers);
     }
   }
 
-   const addReader = (newReader) => {
-    setReaders((prev) => [...prev, newReader]);
+  const addBook = (newBook) => {
+    setBooks((prev) => [...prev, newBook]);
   };
 
+  const addReader = (newReader) => {
+    setReaders((prev) => [...prev, newReader]);
+  };
 
   const autoLogin = async (storedEmail, storedPassword) => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -190,21 +198,21 @@ function App() {
               className="button"
               onClick={() => togglePopup("addNewReader")}
             >
-              {showPage === "addNewReader" ? "Back Home" : "+ Add new reader"}
+              {showPage === "addNewReader" ? "Back Home" : "Add new reader"}
             </button>
 
             <button
               className="button"
               onClick={() => togglePopup("addNewBook")}
             >
-              {showPage === "addNewBook" ? "Back Home" : "+ Add new book"}
+              {showPage === "addNewBook" ? "Back Home" : "Add new book"}
             </button>
 
             <button
               className="button"
               onClick={() => togglePopup("showAllProfiles")}
             >
-              {showPage === "showAllProfiles" ? "Back Home" : "Search profile"}
+              {showPage === "showAllProfiles" ? "Back Home" : "Profiles"}
             </button>
 
             <button
@@ -231,15 +239,19 @@ function App() {
         ) : showPage === "Content" ? (
           <Content supabase={supabase} />
         ) : showPage === "showAllBooks" ? (
-          <BookList supabase={supabase} books={books} />
+          <BookList supabase={supabase} books={books} userId={userId} />
         ) : showPage === "addNewReader" ? (
-          <AddNewReader supabase={supabase}  addReader={addReader} userId={userId}/>
+          <AddNewReader
+            supabase={supabase}
+            addReader={addReader}
+            userId={userId}
+          />
         ) : showPage === "addNewBook" ? (
-          <AddNewBook supabase={supabase} />
+          <AddNewBook supabase={supabase} addBook={addBook} userId={userId} lastBookNumber={lastBookNumber}/>
         ) : showPage === "showAllProfiles" ? (
           <ProfileList supabase={supabase} profilesList={readers} />
         ) : showPage === "bookToCollect" ? (
-          <BooksToCollectList supabase={supabase} book_takers={bookTakers}/>
+          <BooksToCollectList supabase={supabase} book_takers={bookTakers} />
         ) : null}
       </div>
     </div>

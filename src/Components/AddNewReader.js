@@ -34,38 +34,32 @@ function AddNewReader({ supabase, addReader, userId }) {
   };
 
   async function insertReader(supabase, userId, formData) {
-    const toastId = toast.loading("Adding reader...");
+    const loading = toast.loading("Adding reader...");
+    try {
+      const { error } = await supabase.from("readers").insert([
+        {
+          id: uuidv4(),
+          user_id: userId,
+          full_name: formData.full_name,
+          gender: formData.gender,
+          date_of_birth: formData.date_of_birth,
+          contact_number: formData.contact_number,
+          email_address: formData.email_address,
+          address: formData.address,
+          id_proof: formData.id_proof,
+          membership_type: formData.membership_type,
+        },
+      ]);
+      toast.dismiss(loading);
 
-    const { error } = await supabase.from("readers").insert([
-      {
-        id: uuidv4(),
-        user_id: userId,
-        full_name: formData.full_name,
-        gender: formData.gender,
-        date_of_birth: formData.date_of_birth,
-        contact_number: formData.contact_number,
-        email_address: formData.email_address,
-        address: formData.address,
-        id_proof: formData.id_proof,
-        membership_type: formData.membership_type,
-      },
-    ]);
-
-    if (error) {
-      toast.update(toastId, {
-        render: "❌ Failed to add reader. Please try again.",
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
-      });
-      throw error;
-    } else {
-      toast.update(toastId, {
-        render: "✅ Reader added successfully!",
-        type: "success",
-        isLoading: false,
-        autoClose: 2000,
-      });
+      if (error) {
+        toast.error("Failed to add reader. Please try again.");
+        throw error;
+      } else {
+        toast.success("Reader added successfully!");
+      }
+    } catch (error) {
+      toast.error("Failed to add reader. Please try again.");
     }
   }
 
@@ -84,7 +78,7 @@ function AddNewReader({ supabase, addReader, userId }) {
 
   return (
     <div className="add-book-container">
-      <ToastContainer />
+      <ToastContainer position="top-center" />
       <h2 className="add-book-title">Add New Reader</h2>
       <form onSubmit={handleSubmit} className="add-book-form">
         <div className="form-row">

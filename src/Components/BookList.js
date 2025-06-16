@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./CssFile/BookList.css";
-// import books from "../BooksList";
 
 const BookList = ({ supabase, books }) => {
   const [searchQuery, setSearchQuery] = useState("");
-
+  console.log(books)
     const filteredBooks = books
     ?.slice() 
     .sort((a, b) => a.title.localeCompare(b.title)) 
@@ -62,12 +61,12 @@ const BookList = ({ supabase, books }) => {
                 </p>
                 <p
                   className={`font-bold ${
-                    book.availabilityStatus === "Available"
+                    book.availability_status === "Available"
                       ? "text-green-600"
                       : "text-red-600"
                   }`}
                 >
-                  {book.availabilityStatus}
+                  {book.availability_status}
                 </p>
               </div>
             </motion.div>

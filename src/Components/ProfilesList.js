@@ -5,8 +5,8 @@ const ProfileList = ({ supabase, profilesList }) => {
   const [profiles, setProfiles] = useState(profilesList || []);
   const [searchQuery, setSearchQuery] = useState("");
 
-  console.log("profilesList")
-  console.log(profilesList)
+  // console.log("profilesList")
+  // console.log(profilesList)
 
   const handleDelete = (id) => {
     const updatedProfiles = profiles.filter((profile) => profile.id !== id);
@@ -56,7 +56,7 @@ const ProfileList = ({ supabase, profilesList }) => {
             <tbody>
               {filteredProfiles.map((profile, index) => (
                 <motion.tr
-                  key={profile.id}
+                  key={profile.id || index}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
