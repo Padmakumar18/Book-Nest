@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import profilesData from "../Profiles";
 
-const ProfileList = () => {
+const ProfileList = ({supabase}) => {
   const [profiles, setProfiles] = useState(profilesData);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -44,7 +44,6 @@ const ProfileList = () => {
                 <th className="border border-gray-300 px-3 py-2">DOB</th>
                 <th className="border border-gray-300 px-3 py-2">Contact</th>
                 <th className="border border-gray-300 px-3 py-2">Email</th>
-                <th className="border border-gray-300 px-3 py-2">Institution</th>
                 <th className="border border-gray-300 px-3 py-2">Address</th>
                 <th className="border border-gray-300 px-3 py-2">ID Proof</th>
                 <th className="border border-gray-300 px-3 py-2">Actions</th>
@@ -65,7 +64,6 @@ const ProfileList = () => {
                   <td className="border border-gray-300 px-3 py-2">{profile.dateOfBirth}</td>
                   <td className="border border-gray-300 px-3 py-2">{profile.contactNumber}</td>
                   <td className="border border-gray-300 px-3 py-2">{profile.emailAddress}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.institution}</td>
                   <td className="border border-gray-300 px-3 py-2">{profile.address}</td>
                   <td className="border border-gray-300 px-3 py-2">{profile.idProof}</td>
                   <td className="border border-gray-300 px-3 py-2">

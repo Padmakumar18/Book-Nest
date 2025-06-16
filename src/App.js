@@ -104,9 +104,7 @@ function App() {
               className="button"
               onClick={() => togglePopup("addNewBook")}
             >
-              {showPage === "addNewBook"
-                ? "Back Home"
-                : " + Add new book"}
+              {showPage === "addNewBook" ? "Back Home" : " + Add new book"}
             </button>
 
             <button
@@ -133,25 +131,14 @@ function App() {
       )}
 
       <div>
-        {showPage === "Login" && <Login setshowPage={setshowPage} />}
-        {showPage === "Content" && <Content />}
-        {showPage === "Loading" && <Loading />}
-        {showPage === "showAllBooks" && <BookList />}
-        {showPage === "addNewReader" && <AddNewReader />}
-        {showPage === "addNewBook" && <AddNewBook />}
-        {/* {showPage === "addNewReader" && (
-          <AddNewReader
-            onClose={() => setshowPage("Content")}
-          />
-        )} */}
-        {/* {showPage === "addNewBook" && (
-          <AddNewBook
-            onClose={() => setshowPage("Content")}
-            onAdd={handleAddBook}
-          />
-        )} */}
-        {showPage === "showAllProfiles" && <ProfileList />}
-        {showPage === "bookToCollect" && <BooksToCollectList />}
+        {showPage === "Login" && <Login setshowPage={setshowPage} supabase={supabase} />}
+        {showPage === "Content" && <Content supabase={supabase} />}
+        {showPage === "Loading" && <Loading supabase={supabase} />}
+        {showPage === "showAllBooks" && <BookList supabase={supabase} />}
+        {showPage === "addNewReader" && <AddNewReader supabase={supabase} />}
+        {showPage === "addNewBook" && <AddNewBook supabase={supabase} />}
+        {showPage === "showAllProfiles" && <ProfileList supabase={supabase} />}
+        {showPage === "bookToCollect" && <BooksToCollectList supabase={supabase} />}
       </div>
     </div>
   );

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import supabase from "../supabaseClient";
 import "./CssFile/Login.css";
 import toast, { Toaster } from "react-hot-toast";
 
-function Login({setshowPage}) {
+function Login({setshowPage,supabase}) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
