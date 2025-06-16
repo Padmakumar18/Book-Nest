@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Content from "./Components/Content";
+import Content from "./Components/AddBookTaker";
 import AddNewReader from "./Components/AddNewReader";
 import AddNewBook from "./Components/AddNewBook";
 import BookList from "./Components/BookList";
@@ -15,21 +15,11 @@ import BooksToCollectList from "./Components/BooksToCollectList";
 import supabase from "./supabaseClient";
 import { needToCollect } from "./NeedToCollect";
 
-// const { data, error } = await supabase
-//   .from('books_list')
-//   .select('*')
-//   .eq('user_id', user.id);
-
-// const { data, error } = await supabase
-//   .from('readers')
-//   .select('*')
-//   .eq('user_id', user.id);
-
 function App() {
   const [showPage, setshowPage] = useState(null);
+  const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    // console.log(localStorage.getItem("library-management-email"))
     setshowPage("Loading");
     const localStorageEmail = localStorage.getItem("library-management-email");
     const localStoragePass = localStorage.getItem("library-management-pass");
@@ -39,6 +29,35 @@ function App() {
       setshowPage("Login");
     }
   }, []);
+
+  useEffect(() => {
+    fetchProfiles();
+  }, [supabase]);
+
+  useEffect(() => {
+    console.log("books")
+      console.log(books)
+  }, [books]);
+
+  async function fetchProfiles() {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    // console.log("User UID:", user.id);
+
+    const { data, error } = await supabase
+      .from("books")
+      .select("*")
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error(error);
+    } else {
+      console.log("Books for this user:", data);
+      setBooks(data)
+    }
+  }
 
   const autoLogin = async (storedEmail, storedPassword) => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -131,14 +150,18 @@ function App() {
       )}
 
       <div>
-        {showPage === "Login" && <Login setshowPage={setshowPage} supabase={supabase} />}
+        {showPage === "Login" && (
+          <Login setshowPage={setshowPage} supabase={supabase} />
+        )}
         {showPage === "Content" && <Content supabase={supabase} />}
         {showPage === "Loading" && <Loading supabase={supabase} />}
-        {showPage === "showAllBooks" && <BookList supabase={supabase} />}
+        {showPage === "showAllBooks" && <BookList supabase={supabase} books={books} />}
         {showPage === "addNewReader" && <AddNewReader supabase={supabase} />}
         {showPage === "addNewBook" && <AddNewBook supabase={supabase} />}
         {showPage === "showAllProfiles" && <ProfileList supabase={supabase} />}
-        {showPage === "bookToCollect" && <BooksToCollectList supabase={supabase} />}
+        {showPage === "bookToCollect" && (
+          <BooksToCollectList supabase={supabase} />
+        )}
       </div>
     </div>
   );

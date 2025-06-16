@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import "./CssFile/BookList.css";
-import books from "../BooksList";
+// import books from "../BooksList";
 
-const BookList = () => {
+const BookList = ({ supabase, books }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredBooks = books.filter(
-    (book) =>
-      book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    const filteredBooks = books
+    ?.slice() 
+    .sort((a, b) => a.title.localeCompare(b.title)) 
+    .filter(
+      (book) =>
+        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
 
   return (
     <div className="container">
@@ -25,7 +29,7 @@ const BookList = () => {
       </div>
 
       <div className="list">
-        {filteredBooks.length > 0 ? (
+        {filteredBooks && filteredBooks.length > 0 ? (
           filteredBooks.map((book, index) => (
             <motion.div
               className="card-horizontal"
@@ -48,13 +52,13 @@ const BookList = () => {
                   <strong>Genre:</strong> {book.genre}
                 </p>
                 <p>
-                  <strong>Book No:</strong> {book.bookNumber}
+                  <strong>Book No:</strong> {book.book_number}
                 </p>
                 <p>
-                  <strong>Year:</strong> {book.publishedYear}
+                  <strong>Year:</strong> {book.published_year}
                 </p>
                 <p>
-                  <strong>Number of copies:</strong> {book.numberOfCopies}
+                  <strong>Number of copies:</strong> {book.number_of_copies}
                 </p>
                 <p
                   className={`font-bold ${
