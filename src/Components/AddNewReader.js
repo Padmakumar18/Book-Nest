@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./CssFile/PopupForm.css";
+import "./CssFile/PopupForm.css"; 
 
-function AddNewReader({ onClose, onAdd }) {
+function AddNewReader({ onAdd }) {
   const [formData, setFormData] = useState({
     fullName: "",
     gender: "",
@@ -21,16 +21,29 @@ function AddNewReader({ onClose, onAdd }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAdd(formData);
-    onClose();
+    clearForm();
+  };
+
+  const clearForm = () => {
+    setFormData({
+      fullName: "",
+      gender: "",
+      dateOfBirth: "",
+      contactNumber: "",
+      emailAddress: "",
+      address: "",
+      idProof: "",
+      membershipType: "",
+    });
   };
 
   return (
-    <div className="popup-overlay">
-      <div className="popup-content">
-        <h2 className="popup-title">Add New Reader</h2>
-        <form onSubmit={handleSubmit} className="popup-form">
+    <div className="add-book-container">
+      <h2 className="add-book-title">Add New Reader</h2>
+      <form onSubmit={handleSubmit} className="add-book-form">
+        <div className="form-row">
           <input
-            className="popup-input"
+            className="form-input"
             type="text"
             name="fullName"
             placeholder="Full Name"
@@ -39,7 +52,7 @@ function AddNewReader({ onClose, onAdd }) {
             required
           />
           <select
-            className="popup-select"
+            className="form-input"
             name="gender"
             value={formData.gender}
             onChange={handleChange}
@@ -50,8 +63,11 @@ function AddNewReader({ onClose, onAdd }) {
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
+        </div>
+
+        <div className="form-row">
           <input
-            className="popup-input"
+            className="form-input"
             type="date"
             name="dateOfBirth"
             value={formData.dateOfBirth}
@@ -59,7 +75,7 @@ function AddNewReader({ onClose, onAdd }) {
             required
           />
           <input
-            className="popup-input"
+            className="form-input"
             type="tel"
             name="contactNumber"
             placeholder="Contact Number"
@@ -67,8 +83,11 @@ function AddNewReader({ onClose, onAdd }) {
             onChange={handleChange}
             required
           />
+        </div>
+
+        <div className="form-row">
           <input
-            className="popup-input"
+            className="form-input"
             type="email"
             name="emailAddress"
             placeholder="Email Address"
@@ -76,17 +95,8 @@ function AddNewReader({ onClose, onAdd }) {
             onChange={handleChange}
             required
           />
-          <textarea
-            className="popup-textarea"
-            name="address"
-            placeholder="Address"
-            value={formData.address}
-            onChange={handleChange}
-            rows={2}
-            required
-          />
           <input
-            className="popup-input"
+            className="form-input"
             type="text"
             name="idProof"
             placeholder="ID Proof (e.g., PAN)"
@@ -94,8 +104,23 @@ function AddNewReader({ onClose, onAdd }) {
             onChange={handleChange}
             required
           />
+        </div>
+
+        <div className="form-row single-column">
+          <textarea
+            className="form-input"
+            name="address"
+            placeholder="Address"
+            value={formData.address}
+            onChange={handleChange}
+            rows={3}
+            required
+          />
+        </div>
+
+        <div className="form-row">
           <select
-            className="popup-select"
+            className="form-input"
             name="membershipType"
             value={formData.membershipType}
             onChange={handleChange}
@@ -106,17 +131,21 @@ function AddNewReader({ onClose, onAdd }) {
             <option value="Institution">Institution</option>
             <option value="Premium">Premium</option>
           </select>
+        </div>
 
-          <div className="popup-buttons">
-            <button type="button" onClick={onClose} className="cancel-button">
-              Cancel
-            </button>
-            <button type="submit" className="submit-button">
-              Add Reader
-            </button>
-          </div>
-        </form>
-      </div>
+        <div className="form-buttons">
+          <button
+            type="button"
+            className="bg-yellow-500 clear-button mr-3"
+            onClick={clearForm}
+          >
+            Clear
+          </button>
+           <button type="submit" className="bg-blue-500 submit-button">
+            Add Reader
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
