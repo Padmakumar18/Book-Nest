@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { needToCollect } from "../NeedToCollect";
 
-const BooksToCollectList = () => {
-  const [bookTakers, setBookTakers] = useState(needToCollect);
-
+const BooksToCollectList = ({supabase , book_takers}) => {
+  const [bookTakers, setBookTakers] = useState(book_takers || []);
+useEffect(()=> {
+  console.log("bookTakers")
+  console.log(bookTakers)
+},[bookTakers])
   const handleDelete = (index) => {
     const updatedList = [...bookTakers];
     updatedList.splice(index, 1);
@@ -47,10 +50,10 @@ const BooksToCollectList = () => {
                       className={`${rowColor} even:bg-opacity-75`}
                     >
                       <td className="px-4 py-2 border">{index + 1}</td>
-                      <td className="px-4 py-2 border">{taker.takenBy}</td>
-                      <td className="px-4 py-2 border">{taker.bookName}</td>
-                      <td className="px-4 py-2 border">{taker.takenDate}</td>
-                      <td className="px-4 py-2 border">{taker.lastDay}</td>
+                      <td className="px-4 py-2 border">{taker.reader_name}</td>
+                      <td className="px-4 py-2 border">{taker.book_title}</td>
+                      <td className="px-4 py-2 border">{taker.from_date}</td>
+                      <td className="px-4 py-2 border">{taker.return_date}</td>
                       <td className="px-4 py-2 border">
                         <button
                           onClick={() => handleDelete(index)}

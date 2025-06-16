@@ -18,6 +18,9 @@ import { needToCollect } from "./NeedToCollect";
 function App() {
   const [showPage, setshowPage] = useState(null);
   const [books, setBooks] = useState([]);
+  const [profiles, setProfiles] = useState([]);
+  const [bookTakers, setbookTakers] = useState([]);
+  const [UserId, setUserId] = useState("");
 
   useEffect(() => {
     setshowPage("Loading");
@@ -30,21 +33,27 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    fetchProfiles();
-  }, [supabase]);
+  // useEffect(() => {
+  //   console.log(bookTakers);
+  // }, [bookTakers]);
 
-  useEffect(() => {
-    console.log("books")
-      console.log(books)
-  }, [books]);
-
-  async function fetchProfiles() {
+  async function fetchBooks() {
     const {
       data: { user },
+      error: userError,
     } = await supabase.auth.getUser();
 
-    // console.log("User UID:", user.id);
+    if (userError) {
+      console.error("Error fetching user:", userError);
+      return;
+    }
+
+    if (!user) {
+      console.error("No user logged in.");
+      return;
+    }
+
+    setUserId(user.id);
 
     const { data, error } = await supabase
       .from("books")
@@ -52,10 +61,67 @@ function App() {
       .eq("user_id", user.id);
 
     if (error) {
-      console.error(error);
+      console.error("Error fetching books:", error);
     } else {
-      console.log("Books for this user:", data);
-      setBooks(data)
+      setBooks(data);
+    }
+  }
+
+  async function fetchProfiles() {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError) {
+      console.error("Error fetching user:", userError);
+      return;
+    }
+
+    if (!user) {
+      console.error("No user logged in.");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("readers")
+      .select("*")
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Error fetching profiles:", error);
+    } else {
+      setProfiles(data);
+    }
+  }
+
+  async function fetchBookTakers() {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError) {
+      console.error("Error fetching user:", userError);
+      return;
+    }
+
+    if (!user) {
+      console.error("No user logged in.");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("book_takers")
+      .select("*")
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Error fetching profiles:", error);
+    } else {
+      setbookTakers(data);
+      console.log("bookTakers")
+      console.log(bookTakers)
     }
   }
 
@@ -70,6 +136,9 @@ function App() {
       setshowPage("Login");
     } else {
       toast.success("Auto login successful!");
+      await fetchBooks();
+      await fetchProfiles();
+      await fetchBookTakers();
       setshowPage("Content");
     }
   };
@@ -123,7 +192,7 @@ function App() {
               className="button"
               onClick={() => togglePopup("addNewBook")}
             >
-              {showPage === "addNewBook" ? "Back Home" : " + Add new book"}
+              {showPage === "addNewBook" ? "Back Home" : "+ Add new book"}
             </button>
 
             <button
@@ -150,18 +219,23 @@ function App() {
       )}
 
       <div>
-        {showPage === "Login" && (
+        {showPage === "Loading" ? (
+          <Loading />
+        ) : showPage === "Login" ? (
           <Login setshowPage={setshowPage} supabase={supabase} />
-        )}
-        {showPage === "Content" && <Content supabase={supabase} />}
-        {showPage === "Loading" && <Loading supabase={supabase} />}
-        {showPage === "showAllBooks" && <BookList supabase={supabase} books={books} />}
-        {showPage === "addNewReader" && <AddNewReader supabase={supabase} />}
-        {showPage === "addNewBook" && <AddNewBook supabase={supabase} />}
-        {showPage === "showAllProfiles" && <ProfileList supabase={supabase} />}
-        {showPage === "bookToCollect" && (
-          <BooksToCollectList supabase={supabase} />
-        )}
+        ) : showPage === "Content" ? (
+          <Content supabase={supabase} />
+        ) : showPage === "showAllBooks" ? (
+          <BookList supabase={supabase} books={books} />
+        ) : showPage === "addNewReader" ? (
+          <AddNewReader supabase={supabase} />
+        ) : showPage === "addNewBook" ? (
+          <AddNewBook supabase={supabase} />
+        ) : showPage === "showAllProfiles" ? (
+          <ProfileList supabase={supabase} profilesList={profiles} />
+        ) : showPage === "bookToCollect" ? (
+          <BooksToCollectList supabase={supabase} book_takers={bookTakers}/>
+        ) : null}
       </div>
     </div>
   );

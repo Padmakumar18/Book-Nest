@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import profilesData from "../Profiles";
 
-const ProfileList = ({supabase}) => {
-  const [profiles, setProfiles] = useState(profilesData);
+const ProfileList = ({ supabase, profilesList }) => {
+  const [profiles, setProfiles] = useState(profilesList || []);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleDelete = (id) => {
@@ -11,9 +10,11 @@ const ProfileList = ({supabase}) => {
     setProfiles(updatedProfiles);
   };
 
-  const filteredProfiles = profiles.filter((profile) =>
-    profile.fullName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProfiles = profiles
+    .filter((profile) =>
+      profile.full_name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) => a.full_name.localeCompare(b.full_name));
 
   return (
     <div className="p-4">
@@ -58,14 +59,14 @@ const ProfileList = ({supabase}) => {
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   className="hover:bg-gray-50"
                 >
-                  <td className="border border-gray-300 px-3 py-2">{profile.fullName}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.membershipType}</td>
+                  <td className="border border-gray-300 px-3 py-2">{profile.full_name}</td>
+                  <td className="border border-gray-300 px-3 py-2">{profile.membership_type}</td>
                   <td className="border border-gray-300 px-3 py-2">{profile.gender}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.dateOfBirth}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.contactNumber}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.emailAddress}</td>
+                  <td className="border border-gray-300 px-3 py-2">{profile.date_of_birth}</td>
+                  <td className="border border-gray-300 px-3 py-2">{profile.contact_number}</td>
+                  <td className="border border-gray-300 px-3 py-2">{profile.email_address}</td>
                   <td className="border border-gray-300 px-3 py-2">{profile.address}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.idProof}</td>
+                  <td className="border border-gray-300 px-3 py-2">{profile.id_proof}</td>
                   <td className="border border-gray-300 px-3 py-2">
                     <button
                       onClick={() => handleDelete(profile.id)}
