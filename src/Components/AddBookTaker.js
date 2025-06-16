@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CssFile/Content.css";
-// import mockReaders from "../Profiles";
-// import books from "../BooksList";
 
-function AddBookTaker({ supabase, book_takers ,readers,books}) {
+function AddBookTaker({ supabase, book_takers, readers, books }) {
   const [formData, setFormData] = useState({
     reader_name: "",
     book_title: "",
     from_date: "",
     last_date: "",
   });
-
-  console.log("book_takers")
-  console.log(book_takers)
-  console.log(readers)
 
   const [bookTakers, setBookTakers] = useState(book_takers || []);
   const [editIndex, setEditIndex] = useState(null);
@@ -38,7 +32,12 @@ function AddBookTaker({ supabase, book_takers ,readers,books}) {
   };
 
   const handleClear = () => {
-    setFormData({ readerName: "", bookName: "", from_date: "", last_date: "" });
+    setFormData({
+      reader_name: "",
+      book_title: "",
+      from_date: "",
+      last_date: "",
+    });
     setEditIndex(null);
   };
 
@@ -56,6 +55,7 @@ function AddBookTaker({ supabase, book_takers ,readers,books}) {
   return (
     <div className="p-4 md:p-8 bg-gray-100">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Form Section */}
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-bold mb-4 text-center">
             Reader Book Issue Form
@@ -66,7 +66,7 @@ function AddBookTaker({ supabase, book_takers ,readers,books}) {
                 Reader Name <span className="text-red-600">*</span>
               </label>
               <select
-                name="readerName"
+                name="reader_name"
                 value={formData.reader_name}
                 onChange={handleChange}
                 required
@@ -77,8 +77,8 @@ function AddBookTaker({ supabase, book_takers ,readers,books}) {
                 </option>
                 {readers
                   .sort((a, b) => a.full_name.localeCompare(b.full_name))
-                  .map((reader, idx) => (
-                    <option key={idx} value={reader.full_name}>
+                  .map((reader) => (
+                    <option key={reader.id} value={reader.full_name}>
                       {reader.full_name}
                     </option>
                   ))}
@@ -90,7 +90,7 @@ function AddBookTaker({ supabase, book_takers ,readers,books}) {
                 Book Name <span className="text-red-600">*</span>
               </label>
               <select
-                name="bookName"
+                name="book_title"
                 value={formData.book_title}
                 onChange={handleChange}
                 required
@@ -155,6 +155,7 @@ function AddBookTaker({ supabase, book_takers ,readers,books}) {
           </form>
         </div>
 
+        {/* Table Section */}
         <div className="bg-white p-6 rounded-lg shadow overflow-auto max-h-[32rem]">
           <h3 className="text-lg font-semibold mb-4">Book Takers List</h3>
           {bookTakers.length === 0 ? (
@@ -175,19 +176,20 @@ function AddBookTaker({ supabase, book_takers ,readers,books}) {
                 <tbody>
                   <AnimatePresence>
                     {bookTakers.map((taker, index) => (
-                      <motion.tr
-                        key={index}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.4, delay: index * 0.05 }}
-                        className="even:bg-gray-50"
-                      >
-                        <td className="px-4 py-2 border">{index + 1}</td>
+                      <tr key={index} className="even:bg-gray-50">
+                        <motion.td
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.9 }}
+                          transition={{ duration: 0.4, delay: index * 0.05 }}
+                          className="px-4 py-2 border"
+                        >
+                          {index + 1}
+                        </motion.td>
                         <td className="px-4 py-2 border">{taker.reader_name}</td>
                         <td className="px-4 py-2 border">{taker.book_title}</td>
                         <td className="px-4 py-2 border">{taker.from_date}</td>
-                        <td className="px-4 py-2 border">{taker.return_date}</td>
+                        <td className="px-4 py-2 border">{taker.last_date}</td>
                         <td className="px-4 py-2 border flex gap-2">
                           <button
                             onClick={() => handleEdit(index)}
@@ -202,7 +204,7 @@ function AddBookTaker({ supabase, book_takers ,readers,books}) {
                             Delete
                           </button>
                         </td>
-                      </motion.tr>
+                      </tr>
                     ))}
                   </AnimatePresence>
                 </tbody>

@@ -10,10 +10,8 @@ import BookList from "./Components/BookList";
 import ProfileList from "./Components/ProfilesList";
 import Loading from "./Components/Loading";
 import Login from "./Components/Login";
-import BooksToCollectList from "./Components/BooksToCollectList";
 
 import supabase from "./supabaseClient";
-import { needToCollect } from "./NeedToCollect";
 
 function App() {
   const [showPage, setshowPage] = useState(null);
@@ -214,19 +212,6 @@ function App() {
             >
               {showPage === "showAllProfiles" ? "Back Home" : "Profiles"}
             </button>
-
-            <button
-              className="button"
-              onClick={() => togglePopup("bookToCollect")}
-            >
-              {showPage === "bookToCollect"
-                ? "Back Home"
-                : `Books to collect: ${
-                    needToCollect && needToCollect.length !== 0
-                      ? needToCollect.length
-                      : 0
-                  }`}
-            </button>
           </div>
         </>
       )}
@@ -250,8 +235,6 @@ function App() {
           <AddNewBook supabase={supabase} addBook={addBook} userId={userId} lastBookNumber={lastBookNumber}/>
         ) : showPage === "showAllProfiles" ? (
           <ProfileList supabase={supabase} profilesList={readers} />
-        ) : showPage === "bookToCollect" ? (
-          <BooksToCollectList supabase={supabase} book_takers={bookTakers} />
         ) : null}
       </div>
     </div>
