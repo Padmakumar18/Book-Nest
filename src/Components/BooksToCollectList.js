@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { needToCollect } from "../NeedToCollect";
 
-const BooksToCollectList = ({supabase , book_takers}) => {
+const BooksToCollectList = ({ supabase, book_takers }) => {
   const [bookTakers, setBookTakers] = useState(book_takers || []);
-useEffect(()=> {
-  console.log("bookTakers")
-  console.log(bookTakers)
-},[bookTakers])
+  // useEffect(() => {
+  //   console.log("bookTakers");
+  //   console.log(bookTakers);
+  // }, [bookTakers]);
   const handleDelete = (index) => {
     const updatedList = [...bookTakers];
     updatedList.splice(index, 1);

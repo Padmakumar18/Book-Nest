@@ -18,9 +18,9 @@ import { needToCollect } from "./NeedToCollect";
 function App() {
   const [showPage, setshowPage] = useState(null);
   const [books, setBooks] = useState([]);
-  const [profiles, setProfiles] = useState([]);
+  const [readers, setReaders] = useState([]);
   const [bookTakers, setbookTakers] = useState([]);
-  const [UserId, setUserId] = useState("");
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     setshowPage("Loading");
@@ -91,7 +91,7 @@ function App() {
     if (error) {
       console.error("Error fetching profiles:", error);
     } else {
-      setProfiles(data);
+      setReaders(data);
     }
   }
 
@@ -124,6 +124,11 @@ function App() {
       console.log(bookTakers)
     }
   }
+
+   const addReader = (newReader) => {
+    setReaders((prev) => [...prev, newReader]);
+  };
+
 
   const autoLogin = async (storedEmail, storedPassword) => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -228,11 +233,11 @@ function App() {
         ) : showPage === "showAllBooks" ? (
           <BookList supabase={supabase} books={books} />
         ) : showPage === "addNewReader" ? (
-          <AddNewReader supabase={supabase} />
+          <AddNewReader supabase={supabase}  addReader={addReader} userId={userId}/>
         ) : showPage === "addNewBook" ? (
           <AddNewBook supabase={supabase} />
         ) : showPage === "showAllProfiles" ? (
-          <ProfileList supabase={supabase} profilesList={profiles} />
+          <ProfileList supabase={supabase} profilesList={readers} />
         ) : showPage === "bookToCollect" ? (
           <BooksToCollectList supabase={supabase} book_takers={bookTakers}/>
         ) : null}

@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import "./CssFile/PopupForm.css"; 
+import "./CssFile/PopupForm.css";
 
 import { ToastContainer, toast } from "react-toastify";
 
-function AddNewReader() {
-  const [readers, setReaders] = useState([]);
+import { v4 as uuidv4 } from "uuid";
+
+function AddNewReader({ supabase, addReader, userId }) {
   const [formData, setFormData] = useState({
-    fullName: "",
+    full_name: "",
     gender: "",
-    dateOfBirth: "",
-    contactNumber: "",
-    emailAddress: "",
+    date_of_birth: "",
+    contact_number: "",
+    email_address: "",
     address: "",
-    idProof: "",
-    membershipType: "",
+    id_proof: "",
+    membership_type: "",
   });
 
   const handleChange = (e) => {
@@ -21,42 +22,78 @@ function AddNewReader() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddReader = (newReader) => {
-      setReaders((prev) => [...prev, newReader]);
-      toast.success("New reader added successfully!");
-    };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleAddReader(formData);
-    clearForm();
+    try {
+      await insertReader(supabase, userId, formData);
+      addReader(formData);
+      clearForm();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  async function insertReader(supabase, userId, formData) {
+    const toastId = toast.loading("Adding reader...");
+
+    const { error } = await supabase.from("readers").insert([
+      {
+        id: uuidv4(),
+        user_id: userId,
+        full_name: formData.full_name,
+        gender: formData.gender,
+        date_of_birth: formData.date_of_birth,
+        contact_number: formData.contact_number,
+        email_address: formData.email_address,
+        address: formData.address,
+        id_proof: formData.id_proof,
+        membership_type: formData.membership_type,
+      },
+    ]);
+
+    if (error) {
+      toast.update(toastId, {
+        render: "❌ Failed to add reader. Please try again.",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+      throw error;
+    } else {
+      toast.update(toastId, {
+        render: "✅ Reader added successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      });
+    }
+  }
 
   const clearForm = () => {
     setFormData({
-      fullName: "",
+      full_name: "",
       gender: "",
-      dateOfBirth: "",
-      contactNumber: "",
-      emailAddress: "",
+      date_of_birth: "",
+      contact_number: "",
+      email_address: "",
       address: "",
-      idProof: "",
-      membershipType: "",
+      id_proof: "",
+      membership_type: "",
     });
   };
 
   return (
     <div className="add-book-container">
-      <ToastContainer/>
+      <ToastContainer />
       <h2 className="add-book-title">Add New Reader</h2>
       <form onSubmit={handleSubmit} className="add-book-form">
         <div className="form-row">
           <input
             className="form-input"
             type="text"
-            name="fullName"
+            name="full_name"
             placeholder="Full Name"
-            value={formData.fullName}
+            value={formData.full_name}
             onChange={handleChange}
             required
           />
@@ -78,17 +115,17 @@ function AddNewReader() {
           <input
             className="form-input"
             type="date"
-            name="dateOfBirth"
-            value={formData.dateOfBirth}
+            name="date_of_birth"
+            value={formData.date_of_birth}
             onChange={handleChange}
             required
           />
           <input
             className="form-input"
             type="tel"
-            name="contactNumber"
+            name="contact_number"
             placeholder="Contact Number"
-            value={formData.contactNumber}
+            value={formData.contact_number}
             onChange={handleChange}
             required
           />
@@ -98,18 +135,18 @@ function AddNewReader() {
           <input
             className="form-input"
             type="email"
-            name="emailAddress"
+            name="email_address"
             placeholder="Email Address"
-            value={formData.emailAddress}
+            value={formData.email_address}
             onChange={handleChange}
             required
           />
           <input
             className="form-input"
             type="text"
-            name="idProof"
+            name="id_proof"
             placeholder="ID Proof (e.g., PAN)"
-            value={formData.idProof}
+            value={formData.id_proof}
             onChange={handleChange}
             required
           />
@@ -130,8 +167,8 @@ function AddNewReader() {
         <div className="form-row">
           <select
             className="form-input"
-            name="membershipType"
-            value={formData.membershipType}
+            name="membership_type"
+            value={formData.membership_type}
             onChange={handleChange}
             required
           >
@@ -150,7 +187,7 @@ function AddNewReader() {
           >
             Clear
           </button>
-           <button type="submit" className="bg-blue-500 submit-button">
+          <button type="submit" className="bg-blue-500 submit-button">
             Add Reader
           </button>
         </div>
