@@ -1,17 +1,22 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import "./CssFile/Content.css";
-import mockReaders from "../Profiles";
-import books from "../BooksList";
+// import mockReaders from "../Profiles";
+// import books from "../BooksList";
 
-function Content() {
+function AddBookTaker({ supabase, book_takers ,readers,books}) {
   const [formData, setFormData] = useState({
-    readerName: "",
-    bookName: "",
+    reader_name: "",
+    book_title: "",
     from_date: "",
     last_date: "",
   });
 
-  const [bookTakers, setBookTakers] = useState([]);
+  console.log("book_takers")
+  console.log(book_takers)
+  console.log(readers)
+
+  const [bookTakers, setBookTakers] = useState(book_takers || []);
   const [editIndex, setEditIndex] = useState(null);
 
   const handleChange = (e) => {
@@ -24,21 +29,22 @@ function Content() {
     if (editIndex !== null) {
       const updated = [...bookTakers];
       updated[editIndex] = formData;
-      setBookTakers(updated); 
+      setBookTakers(updated);
       setEditIndex(null);
     } else {
-      setBookTakers([...bookTakers, formData]);
+      setBookTakers((prev) => [...prev, formData]);
     }
     handleClear();
   };
 
   const handleClear = () => {
-    setFormData({ readerName: "", from_date: "", bookName: "", last_date: "" });
+    setFormData({ readerName: "", bookName: "", from_date: "", last_date: "" });
     setEditIndex(null);
   };
 
   const handleDelete = (index) => {
-    const updated = bookTakers.filter((_, i) => i !== index);
+    const updated = [...bookTakers];
+    updated.splice(index, 1);
     setBookTakers(updated);
   };
 
@@ -49,123 +55,112 @@ function Content() {
 
   return (
     <div className="p-4 md:p-8 bg-gray-100">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h2 className="text-xl font-bold mb-4 text-center">
+            Reader Book Issue Form
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Reader Name <span className="text-red-600">*</span>
+              </label>
+              <select
+                name="readerName"
+                value={formData.reader_name}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="" disabled>
+                  Select a reader
+                </option>
+                {readers
+                  .sort((a, b) => a.full_name.localeCompare(b.full_name))
+                  .map((reader, idx) => (
+                    <option key={idx} value={reader.full_name}>
+                      {reader.full_name}
+                    </option>
+                  ))}
+              </select>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-bold mb-4 text-center">
-              Reader Book Issue Form
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Book Name <span className="text-red-600">*</span>
+              </label>
+              <select
+                name="bookName"
+                value={formData.book_title}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="" disabled>
+                  Select a book
+                </option>
+                {books
+                  .sort((a, b) => a.title.localeCompare(b.title))
+                  .map((book) => (
+                    <option key={book.bookNumber} value={book.title}>
+                      {book.title}
+                    </option>
+                  ))}
+              </select>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
-                  Reader Name <span className="text-red-600">*</span>
-                </label>
-                <select
-                  name="readerName"
-                  value={formData.readerName}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="" disabled>Select a reader</option>
-                  {mockReaders
-                    .sort((a, b) => a.fullName.localeCompare(b.fullName))
-                    .map((reader, idx) => (
-                      <option key={idx} value={reader.fullName}>
-                        {reader.fullName}
-                      </option>
-                    ))}
-                </select>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                From Date <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="date"
+                name="from_date"
+                value={formData.from_date}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
-                  Book Name <span className="text-red-600">*</span>
-                </label>
-                <select
-                  name="bookName"
-                  value={formData.bookName}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="" disabled>Select a book</option>
-                  {books
-                    .sort((a, b) => a.title.localeCompare(b.title))
-                    .map((book, idx) => (
-                      <option key={book.bookNumber} value={book.title}>
-                        {book.title}
-                      </option>
-                    ))}
-                </select>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Last Date <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="date"
+                name="last_date"
+                value={formData.last_date}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
-                  From Date <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.from_date}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
-                  Last Date <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.last_date}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={handleClear}
+                className="w-full sm:w-1/2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-400 transition"
+              >
+                Clear
+              </button>
+              <button
+                type="submit"
+                className="w-full sm:w-1/2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition"
+              >
+                {editIndex !== null ? "Update" : "Submit"}
+              </button>
+            </div>
+          </form>
+        </div>
 
-              {/* <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
-                  Number of Days <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="number"
-                  name="days"
-                  value={formData.days}
-                  onChange={handleChange}
-                  required
-                  min={1}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div> */}
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  className="w-full sm:w-1/2 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-400 transition"
-                >
-                  Clear
-                </button>
-                <button
-                  type="submit"
-                  className="w-full sm:w-1/2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition"
-                >
-                  {editIndex !== null ? "Update" : "Submit"}
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow overflow-auto max-h-[32rem]">
-            <h3 className="text-lg font-semibold mb-4">Book Takers List</h3>
-            {bookTakers.length === 0 ? (
-              <p className="text-gray-500 italic">No entries yet.</p>
-            ) : (
+        <div className="bg-white p-6 rounded-lg shadow overflow-auto max-h-[32rem]">
+          <h3 className="text-lg font-semibold mb-4">Book Takers List</h3>
+          {bookTakers.length === 0 ? (
+            <p className="text-gray-500 italic">No entries yet.</p>
+          ) : (
+            <div className="overflow-x-auto">
               <table className="min-w-full border border-gray-300 text-sm">
                 <thead className="bg-gray-200 text-left">
                   <tr>
@@ -178,36 +173,46 @@ function Content() {
                   </tr>
                 </thead>
                 <tbody>
-                  {bookTakers.map((taker, index) => (
-                    <tr key={index} className="even:bg-gray-50">
-                      <td className="px-4 py-2 border">{index + 1}</td>
-                      <td className="px-4 py-2 border">{taker.readerName}</td>
-                      <td className="px-4 py-2 border">{taker.bookName}</td>
-                      <td className="px-4 py-2 border">{taker.from_date}</td>
-                      <td className="px-4 py-2 border">{taker.last_date}</td>
-                      <td className="px-4 py-2 border flex gap-2">
-                        <button
-                          onClick={() => handleEdit(index)}
-                          className="text-blue-600 hover:underline"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDelete(index)}
-                          className="text-red-600 hover:underline"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  <AnimatePresence>
+                    {bookTakers.map((taker, index) => (
+                      <motion.tr
+                        key={index}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.4, delay: index * 0.05 }}
+                        className="even:bg-gray-50"
+                      >
+                        <td className="px-4 py-2 border">{index + 1}</td>
+                        <td className="px-4 py-2 border">{taker.reader_name}</td>
+                        <td className="px-4 py-2 border">{taker.book_title}</td>
+                        <td className="px-4 py-2 border">{taker.from_date}</td>
+                        <td className="px-4 py-2 border">{taker.return_date}</td>
+                        <td className="px-4 py-2 border flex gap-2">
+                          <button
+                            onClick={() => handleEdit(index)}
+                            className="text-blue-600 hover:underline"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(index)}
+                            className="text-red-600 hover:underline"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </AnimatePresence>
                 </tbody>
               </table>
-            )}
-          </div>
+            </div>
+          )}
         </div>
+      </div>
     </div>
   );
 }
 
-export default Content;
+export default AddBookTaker;

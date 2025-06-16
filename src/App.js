@@ -237,7 +237,7 @@ function App() {
         ) : showPage === "Login" ? (
           <Login setshowPage={setshowPage} supabase={supabase} />
         ) : showPage === "Content" ? (
-          <Content supabase={supabase} />
+          <Content supabase={supabase} book_takers={bookTakers} readers={readers} books={books}/>
         ) : showPage === "showAllBooks" ? (
           <BookList supabase={supabase} books={books} userId={userId} />
         ) : showPage === "addNewReader" ? (
