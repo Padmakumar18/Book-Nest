@@ -25,24 +25,8 @@ import { needToCollect } from "./NeedToCollect";
 //   .select('*')
 //   .eq('user_id', user.id);
 
-
-
 function App() {
   const [showPage, setshowPage] = useState(null);
-  const [readers, setReaders] = useState([]);
-  const [books, setBooks] = useState([]);
-
-  const handleAddReader = (newReader) => {
-    setReaders((prev) => [...prev, newReader]);
-    toast.success("New reader added successfully!");
-    // setshowPage(null);
-  };
-
-  const handleAddBook = (newBook) => {
-    setBooks((prev) => [...prev, newBook]);
-    toast.success("New book added successfully!");
-    // setshowPage(null);
-  };
 
   useEffect(() => {
     // console.log(localStorage.getItem("library-management-email"))
@@ -52,7 +36,7 @@ function App() {
     if (localStorageEmail && localStoragePass) {
       autoLogin(localStorageEmail, localStoragePass);
     } else {
-      setshowPage("Login"); 
+      setshowPage("Login");
     }
   }, []);
 
@@ -111,16 +95,18 @@ function App() {
 
             <button
               className="button"
-              onClick={() => setshowPage("addNewReader")}
+              onClick={() => togglePopup("addNewReader")}
             >
-              + Add new reader
+              {showPage === "addNewReader" ? "Back Home" : "+ Add new reader"}
             </button>
 
             <button
               className="button"
-              onClick={() => setshowPage("addNewBook")}
+              onClick={() => togglePopup("addNewBook")}
             >
-              + Add new book
+              {showPage === "addNewBook"
+                ? "Back Home"
+                : " + Add new book"}
             </button>
 
             <button
@@ -136,7 +122,11 @@ function App() {
             >
               {showPage === "bookToCollect"
                 ? "Back Home"
-                : `Books to collect: ${needToCollect && needToCollect.length !== 0 ? needToCollect.length : 0}`}
+                : `Books to collect: ${
+                    needToCollect && needToCollect.length !== 0
+                      ? needToCollect.length
+                      : 0
+                  }`}
             </button>
           </div>
         </>
@@ -147,20 +137,21 @@ function App() {
         {showPage === "Content" && <Content />}
         {showPage === "Loading" && <Loading />}
         {showPage === "showAllBooks" && <BookList />}
-        {showPage === "addNewReader" && (
+        {showPage === "addNewReader" && <AddNewReader />}
+        {showPage === "addNewBook" && <AddNewBook />}
+        {/* {showPage === "addNewReader" && (
           <AddNewReader
             onClose={() => setshowPage("Content")}
-            onAdd={handleAddReader}
           />
-        )}
-        {showPage === "addNewBook" && (
+        )} */}
+        {/* {showPage === "addNewBook" && (
           <AddNewBook
             onClose={() => setshowPage("Content")}
             onAdd={handleAddBook}
           />
-        )}
+        )} */}
         {showPage === "showAllProfiles" && <ProfileList />}
-        {showPage === "bookToCollect" && <BooksToCollectList/>}
+        {showPage === "bookToCollect" && <BooksToCollectList />}
       </div>
     </div>
   );

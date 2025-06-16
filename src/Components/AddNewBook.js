@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "./CssFile/PopupForm.css";
 
-function AddNewBook({ onAdd }) {
+import { ToastContainer, toast } from "react-toastify";
+
+function AddNewBook() {
+  const [books, setBooks] = useState([]);
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -38,6 +41,11 @@ function AddNewBook({ onAdd }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleAddBook = (newBook) => {
+    setBooks((prev) => [...prev, newBook]);
+    toast.success("New book added successfully!");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const processedData = {
@@ -46,7 +54,7 @@ function AddNewBook({ onAdd }) {
       publishedYear: parseInt(formData.publishedYear),
       numberOfCopies: parseInt(formData.numberOfCopies),
     };
-    onAdd(processedData);
+    handleAddBook(processedData);
     setFormData({
       title: "",
       author: "",

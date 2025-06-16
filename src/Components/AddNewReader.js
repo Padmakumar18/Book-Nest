@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "./CssFile/PopupForm.css"; 
 
-function AddNewReader({ onAdd }) {
+import { ToastContainer, toast } from "react-toastify";
+
+function AddNewReader() {
+  const [readers, setReaders] = useState([]);
   const [formData, setFormData] = useState({
     fullName: "",
     gender: "",
@@ -18,9 +21,14 @@ function AddNewReader({ onAdd }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleAddReader = (newReader) => {
+      setReaders((prev) => [...prev, newReader]);
+      toast.success("New reader added successfully!");
+    };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(formData);
+    handleAddReader(formData);
     clearForm();
   };
 
@@ -39,6 +47,7 @@ function AddNewReader({ onAdd }) {
 
   return (
     <div className="add-book-container">
+      <ToastContainer/>
       <h2 className="add-book-title">Add New Reader</h2>
       <form onSubmit={handleSubmit} className="add-book-form">
         <div className="form-row">
