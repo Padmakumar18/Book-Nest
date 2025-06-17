@@ -59,6 +59,7 @@ function AddNewReader({ supabase, addReader, userId }) {
         toast.success("Reader added successfully!");
       }
     } catch (error) {
+      toast.dismiss(loading);
       toast.error("Failed to add reader. Please try again.");
     }
   }

@@ -128,6 +128,10 @@ function App() {
     }
   }
 
+  const addBookTaker = (bookTaker) => {
+    setbookTakers(bookTaker);
+  };
+
   const addBook = (newBook) => {
     setBooks((prev) => [...prev, newBook]);
   };
@@ -222,7 +226,7 @@ function App() {
         ) : showPage === "Login" ? (
           <Login setshowPage={setshowPage} supabase={supabase} />
         ) : showPage === "Content" ? (
-          <Content supabase={supabase} book_takers={bookTakers} readers={readers} books={books}/>
+          <Content supabase={supabase} book_takers={bookTakers} readers={readers} books={books} addBookTaker={addBookTaker} userId={userId}/>
         ) : showPage === "showAllBooks" ? (
           <BookList supabase={supabase} books={books} userId={userId} />
         ) : showPage === "addNewReader" ? (

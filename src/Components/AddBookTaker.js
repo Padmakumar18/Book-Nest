@@ -1,16 +1,26 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CssFile/Content.css";
+import { ToastContainer, toast } from "react-toastify";
 
-function AddBookTaker({ supabase, book_takers, readers, books }) {
+import { v4 as uuidv4 } from "uuid";
+
+function AddBookTaker({
+  supabase, book_takers, readers, books, addBookTaker, userId}) {
   const [formData, setFormData] = useState({
     reader_name: "",
+    reader_id: "",
     book_title: "",
+    book_id: "",
     from_date: "",
     last_date: "",
   });
 
-  const [bookTakers, setBookTakers] = useState(book_takers || []);
+  // console.log("books");
+  // console.log(books);
+  // console.log("readers");
+  // console.log(readers);
+
   const [editIndex, setEditIndex] = useState(null);
 
   const handleChange = (e) => {
@@ -20,21 +30,58 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (editIndex !== null) {
-      const updated = [...bookTakers];
-      updated[editIndex] = formData;
-      setBookTakers(updated);
-      setEditIndex(null);
-    } else {
-      setBookTakers((prev) => [...prev, formData]);
+    try {
+      if (editIndex !== null) {
+        const updated = [...book_takers];
+        updated[editIndex] = formData;
+        addBookTaker(updated);
+        setEditIndex(null);
+      } else {
+        insertBookTaker();
+        addBookTaker((prev) => [...prev, formData]);
+      }
+      handleClear();
+    } catch (error) {
+      toast.error("Try again");
     }
-    handleClear();
   };
+
+  async function insertBookTaker() {
+    const loading = toast.loading("Adding reader...");
+    try {
+      const { error } = await supabase.from("book_takers").insert([
+        {
+          id: uuidv4(),
+          book_title: formData.book_title,
+          from_date: formData.from_date,
+          user_id: userId,
+          reader_id: formData.reader_id,
+          book_id: formData.book_id,
+          return_date: formData.last_date,
+          reader_name: formData.reader_name,
+        },
+      ]);
+      toast.dismiss(loading);
+      if (error) {
+        console.error(error.message)
+        toast.error("Failed to add. Please try again.");
+        throw error;
+      } else {
+        toast.success("Successfully added!");
+      }
+    } catch (error) {
+      console.error(error.message)
+      toast.dismiss(loading);
+      toast.error("Failed to add. Please try again.");
+    }
+  }
 
   const handleClear = () => {
     setFormData({
       reader_name: "",
+      reader_id: "",
       book_title: "",
+      book_id: "",
       from_date: "",
       last_date: "",
     });
@@ -42,20 +89,20 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
   };
 
   const handleDelete = (index) => {
-    const updated = [...bookTakers];
+    const updated = [...book_takers];
     updated.splice(index, 1);
-    setBookTakers(updated);
+    addBookTaker(updated);
   };
 
   const handleEdit = (index) => {
-    setFormData(bookTakers[index]);
+    setFormData(book_takers[index]);
     setEditIndex(index);
   };
 
   return (
     <div className="p-4 md:p-8 bg-gray-100">
+      <ToastContainer position="top-center" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Form Section */}
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-bold mb-4 text-center">
             Reader Book Issue Form
@@ -66,9 +113,19 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
                 Reader Name <span className="text-red-600">*</span>
               </label>
               <select
-                name="reader_name"
-                value={formData.reader_name}
-                onChange={handleChange}
+                name="reader_id"
+                value={formData.reader_id}
+                onChange={(e) => {
+                  const reader_id = e.target.value;
+                  const selectedReader = readers.find(
+                    (r) => r.id === reader_id
+                  );
+                  setFormData((prev) => ({
+                    ...prev,
+                    reader_id,
+                    reader_name: selectedReader?.full_name || "",
+                  }));
+                }}
                 required
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
@@ -78,7 +135,7 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
                 {readers
                   .sort((a, b) => a.full_name.localeCompare(b.full_name))
                   .map((reader) => (
-                    <option key={reader.id} value={reader.full_name}>
+                    <option key={reader.id} value={reader.id}>
                       {reader.full_name}
                     </option>
                   ))}
@@ -90,9 +147,17 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
                 Book Name <span className="text-red-600">*</span>
               </label>
               <select
-                name="book_title"
-                value={formData.book_title}
-                onChange={handleChange}
+                name="book_id"
+                value={formData.book_id}
+                onChange={(e) => {
+                  const book_id = e.target.value;
+                  const selectedBook = books.find((b) => b.id === book_id);
+                  setFormData((prev) => ({
+                    ...prev,
+                    book_id,
+                    book_title: selectedBook?.title || "",
+                  }));
+                }}
                 required
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
@@ -102,7 +167,7 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
                 {books
                   .sort((a, b) => a.title.localeCompare(b.title))
                   .map((book) => (
-                    <option key={book.bookNumber} value={book.title}>
+                    <option key={book.id} value={book.id}>
                       {book.title}
                     </option>
                   ))}
@@ -158,7 +223,7 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
         {/* Table Section */}
         <div className="bg-white p-6 rounded-lg shadow overflow-auto max-h-[32rem]">
           <h3 className="text-lg font-semibold mb-4">Book Takers List</h3>
-          {bookTakers.length === 0 ? (
+          {book_takers.length === 0 ? (
             <p className="text-gray-500 italic">No entries yet.</p>
           ) : (
             <div className="overflow-x-auto">
@@ -175,7 +240,7 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
                 </thead>
                 <tbody>
                   <AnimatePresence>
-                    {bookTakers.map((taker, index) => (
+                    {book_takers.map((taker, index) => (
                       <tr key={index} className="even:bg-gray-50">
                         <motion.td
                           initial={{ opacity: 0, y: 10 }}
@@ -186,10 +251,12 @@ function AddBookTaker({ supabase, book_takers, readers, books }) {
                         >
                           {index + 1}
                         </motion.td>
-                        <td className="px-4 py-2 border">{taker.reader_name}</td>
+                        <td className="px-4 py-2 border">
+                          {taker.reader_name}
+                        </td>
                         <td className="px-4 py-2 border">{taker.book_title}</td>
                         <td className="px-4 py-2 border">{taker.from_date}</td>
-                        <td className="px-4 py-2 border">{taker.last_date}</td>
+                        <td className="px-4 py-2 border">{taker.return_date}</td>
                         <td className="px-4 py-2 border flex gap-2">
                           <button
                             onClick={() => handleEdit(index)}
