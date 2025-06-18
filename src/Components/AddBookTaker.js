@@ -6,20 +6,28 @@ import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 function AddBookTaker({
-  supabase, book_takers, readers, books, addBookTaker, userId}) {
+  supabase,
+  book_takers,
+  readers,
+  books,
+  addBookTaker,
+  userId,
+}) {
   const [formData, setFormData] = useState({
     reader_name: "",
     reader_id: "",
     book_title: "",
     book_id: "",
     from_date: "",
-    last_date: "",
+    return_date: "",
   });
 
   // console.log("books");
   // console.log(books);
   // console.log("readers");
   // console.log(readers);
+  console.log("book_takers");
+  console.log(book_takers);
 
   const [editIndex, setEditIndex] = useState(null);
 
@@ -28,16 +36,21 @@ function AddBookTaker({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (editIndex !== null) {
         const updated = [...book_takers];
         updated[editIndex] = formData;
+
+        // console.log("updated")
+        // console.log(updated[editIndex].id)
+
+        await alterBookTaker(updated[editIndex].id);
         addBookTaker(updated);
         setEditIndex(null);
       } else {
-        insertBookTaker();
+        await insertBookTaker();
         addBookTaker((prev) => [...prev, formData]);
       }
       handleClear();
@@ -57,20 +70,50 @@ function AddBookTaker({
           user_id: userId,
           reader_id: formData.reader_id,
           book_id: formData.book_id,
-          return_date: formData.last_date,
+          return_date: formData.return_date,
           reader_name: formData.reader_name,
         },
       ]);
       toast.dismiss(loading);
       if (error) {
-        console.error(error.message)
+        console.error(error.message);
         toast.error("Failed to add. Please try again.");
         throw error;
       } else {
         toast.success("Successfully added!");
       }
     } catch (error) {
-      console.error(error.message)
+      console.error(error.message);
+      toast.dismiss(loading);
+      toast.error("Failed to add. Please try again.");
+    }
+  }
+
+  async function alterBookTaker(row_id) {
+    const loading = toast.loading("Adding reader...");
+    try {
+      const { error } = await supabase
+        .from("book_takers")
+        .update({
+          book_title: formData.book_title,
+          from_date: formData.from_date,
+          user_id: userId,
+          reader_id: formData.reader_id,
+          book_id: formData.book_id,
+          return_date: formData.return_date,
+          reader_name: formData.reader_name,
+        })
+        .eq("id", row_id);
+      toast.dismiss(loading);
+      if (error) {
+        console.error(error.message);
+        toast.error("Failed to add. Please try again.");
+        throw error;
+      } else {
+        toast.success("Successfully added!");
+      }
+    } catch (error) {
+      console.error(error.message);
       toast.dismiss(loading);
       toast.error("Failed to add. Please try again.");
     }
@@ -83,7 +126,7 @@ function AddBookTaker({
       book_title: "",
       book_id: "",
       from_date: "",
-      last_date: "",
+      return_date: "",
     });
     setEditIndex(null);
   };
@@ -194,8 +237,8 @@ function AddBookTaker({
               </label>
               <input
                 type="date"
-                name="last_date"
-                value={formData.last_date}
+                name="return_date"
+                value={formData.return_date}
                 onChange={handleChange}
                 required
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -256,7 +299,9 @@ function AddBookTaker({
                         </td>
                         <td className="px-4 py-2 border">{taker.book_title}</td>
                         <td className="px-4 py-2 border">{taker.from_date}</td>
-                        <td className="px-4 py-2 border">{taker.return_date}</td>
+                        <td className="px-4 py-2 border">
+                          {taker.return_date}
+                        </td>
                         <td className="px-4 py-2 border flex gap-2">
                           <button
                             onClick={() => handleEdit(index)}
