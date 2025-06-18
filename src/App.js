@@ -123,17 +123,11 @@ function App() {
       console.error("Error fetching profiles:", error);
     } else {
       setbookTakers(data);
-      console.log("bookTakers");
-      console.log(bookTakers);
     }
   }
 
   const addBookTaker = (bookTaker) => {
     setbookTakers(bookTaker);
-  };
-
-  const addBook = (newBook) => {
-    setBooks((prev) => [...prev, newBook]);
   };
 
   const addReader = (newReader) => {
@@ -236,7 +230,7 @@ function App() {
             userId={userId}
           />
         ) : showPage === "addNewBook" ? (
-          <AddNewBook supabase={supabase} addBook={addBook} userId={userId} lastBookNumber={lastBookNumber}/>
+          <AddNewBook supabase={supabase} fetchBooks={fetchBooks} userId={userId} lastBookNumber={lastBookNumber}/>
         ) : showPage === "showAllProfiles" ? (
           <ProfileList supabase={supabase} profilesList={readers} />
         ) : null}

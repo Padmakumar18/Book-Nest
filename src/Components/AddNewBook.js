@@ -5,8 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { v4 as uuidv4 } from "uuid";
 
-function AddNewBook({ supabase, addBook, userId, lastBookNumber }) {
-  const [books, setBooks] = useState([]);
+function AddNewBook({ supabase, fetchBooks, userId, lastBookNumber }) {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -63,7 +62,7 @@ function AddNewBook({ supabase, addBook, userId, lastBookNumber }) {
         toast.error("Failed to add book. Please try again");
       } else {
         toast.success("Book added successfully!");
-        addBook(formData);
+        fetchBooks();
       }
     } catch (error) {
       console.error(error.message);
@@ -72,10 +71,11 @@ function AddNewBook({ supabase, addBook, userId, lastBookNumber }) {
   }
 
   const handleSubmit = (e) => {
+    lastBookNumber++
     e.preventDefault();
     const processedData = {
       ...formData,
-      book_number: parseInt(++lastBookNumber),
+      book_number: parseInt(lastBookNumber),
       published_year: parseInt(formData.published_year),
       number_of_copies: parseInt(formData.number_of_copies),
     };

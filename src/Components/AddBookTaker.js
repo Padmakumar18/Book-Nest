@@ -20,14 +20,15 @@ function AddBookTaker({
     book_id: "",
     from_date: "",
     return_date: "",
+    book_number: "",
   });
 
   // console.log("books");
   // console.log(books);
   // console.log("readers");
   // console.log(readers);
-  console.log("book_takers");
-  console.log(book_takers);
+  // console.log("book_takers");
+  // console.log(book_takers);
 
   const [editIndex, setEditIndex] = useState(null);
 
@@ -72,6 +73,7 @@ function AddBookTaker({
           book_id: formData.book_id,
           return_date: formData.return_date,
           reader_name: formData.reader_name,
+          book_number: formData.book_number,
         },
       ]);
       toast.dismiss(loading);
@@ -102,6 +104,7 @@ function AddBookTaker({
           book_id: formData.book_id,
           return_date: formData.return_date,
           reader_name: formData.reader_name,
+          book_number: formData.book_number,
         })
         .eq("id", row_id);
       toast.dismiss(loading);
@@ -127,6 +130,7 @@ function AddBookTaker({
       book_id: "",
       from_date: "",
       return_date: "",
+      book_number: "",
     });
     setEditIndex(null);
   };
@@ -199,6 +203,7 @@ function AddBookTaker({
                     ...prev,
                     book_id,
                     book_title: selectedBook?.title || "",
+                    book_number: selectedBook?.book_number || "",
                   }));
                 }}
                 required
