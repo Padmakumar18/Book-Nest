@@ -4,12 +4,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import "./CssFile/BookList.css";
 
-const BookList = ({ supabase, books, fetchBooks }) => {
+import { ToastContainer, toast } from "react-toastify";
+
+const BookList = ({ supabase, books, userId, fetchBooks }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [deletingBookId, setDeletingBookId] = useState(null);
 
-  console.log("books")
-  console.log(books)
+  console.log("books");
+  console.log(books);
 
   const filteredBooks = books
     ?.slice()
@@ -21,23 +23,28 @@ const BookList = ({ supabase, books, fetchBooks }) => {
     );
 
   const handleDelete = async (bookId, bookNumber) => {
+    const loading = toast.loading("Deleting Book...");
     setDeletingBookId(bookId);
 
-    const { error } = await supabase.from("books").delete().eq("id", bookId);
+    const { error } = await supabase
+      .from("books")
+      .delete()
+      .eq("id", bookId)
+      .eq("user_id", userId);
 
     if (error) {
-      console.error("Error deleting book:", error);
-      alert("Failed to delete the book. Please try again.");
+      console.error(error);
+      toast.error("Failed to delete the book. Please try again.");
     } else {
-      alert(`Deleted: Book ID ${bookId}, Book Number ${bookNumber}`);
-      if (fetchBooks) fetchBooks();
+      toast.success("Book deleted!");
+      fetchBooks();
     }
-
-    setDeletingBookId(null);
+    toast.dismiss(loading);
   };
 
   return (
     <div className="container">
+      <ToastContainer position="top-center" />
       <div className="search-bar">
         <input
           type="text"
@@ -60,11 +67,21 @@ const BookList = ({ supabase, books, fetchBooks }) => {
             >
               <div className="card-content">
                 <h3>{book.title}</h3>
-                <p><strong>Author:</strong> {book.author}</p>
-                <p><strong>Genre:</strong> {book.genre}</p>
-                <p><strong>Book No:</strong> {book.book_number}</p>
-                <p><strong>Year:</strong> {book.published_year}</p>
-                <p><strong>Copies:</strong> {book.number_of_copies || 0}</p>
+                <p>
+                  <strong>Author:</strong> {book.author}
+                </p>
+                <p>
+                  <strong>Genre:</strong> {book.genre}
+                </p>
+                <p>
+                  <strong>Book No:</strong> {book.book_number}
+                </p>
+                <p>
+                  <strong>Year:</strong> {book.published_year}
+                </p>
+                <p>
+                  <strong>Copies:</strong> {book.number_of_copies || 0}
+                </p>
                 <p
                   className={`availability ${
                     book.availability_status === "Available"

@@ -130,6 +130,10 @@ function App() {
     setbookTakers(bookTaker);
   };
 
+  const addBook = (newBook) => {
+    setBooks((prev) => [...prev, newBook]);
+  };
+
   const addReader = (newReader) => {
     setReaders((prev) => [...prev, newReader]);
   };
@@ -222,7 +226,7 @@ function App() {
         ) : showPage === "Content" ? (
           <Content supabase={supabase} book_takers={bookTakers} readers={readers} books={books} addBookTaker={addBookTaker} userId={userId}/>
         ) : showPage === "showAllBooks" ? (
-          <BookList supabase={supabase} books={books} userId={userId} />
+          <BookList supabase={supabase} books={books} userId={userId} fetchBooks={fetchBooks}/>
         ) : showPage === "addNewReader" ? (
           <AddNewReader
             supabase={supabase}
@@ -230,7 +234,7 @@ function App() {
             userId={userId}
           />
         ) : showPage === "addNewBook" ? (
-          <AddNewBook supabase={supabase} fetchBooks={fetchBooks} userId={userId} lastBookNumber={lastBookNumber}/>
+          <AddNewBook supabase={supabase} addBook={addBook} userId={userId} lastBookNumber={lastBookNumber}/>
         ) : showPage === "showAllProfiles" ? (
           <ProfileList supabase={supabase} profilesList={readers} />
         ) : null}
