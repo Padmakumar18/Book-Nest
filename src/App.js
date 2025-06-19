@@ -14,7 +14,7 @@ import Login from "./Components/Login";
 import supabase from "./supabaseClient";
 
 function App() {
-  const [showPage, setshowPage] = useState(null);
+  const [showPage, setshowPage] = useState("addBookTaker");
   const [books, setBooks] = useState([]);
   const [readers, setReaders] = useState([]);
   const [bookTakers, setbookTakers] = useState([]);
@@ -148,7 +148,7 @@ function App() {
       await fetchBooks();
       await fetchProfiles();
       await fetchBookTakers();
-      setshowPage("Content");
+      setshowPage("addBookTaker");
     }
   };
 
@@ -182,33 +182,48 @@ function App() {
           </div>
           <hr />
 
-          <div className="buttons mt-6 mb-5">
+          <div className="buttons mt-6 mb-5 flex flex-wrap gap-3">
             <button
-              className="button"
-              onClick={() => togglePopup("showAllBooks")}
+              className={`button ${
+                showPage === "addBookTaker" ? "active" : ""
+              }`}
+              onClick={() => setshowPage("addBookTaker")}
             >
-              {showPage === "showAllBooks" ? "Back Home" : "View all books"}
+              Issue Book
             </button>
 
             <button
-              className="button"
-              onClick={() => togglePopup("addNewReader")}
+              className={`button ${
+                showPage === "showAllBooks" ? "active" : ""
+              }`}
+              onClick={() => setshowPage("showAllBooks")}
             >
-              {showPage === "addNewReader" ? "Back Home" : "Add new reader"}
+              View All Books
             </button>
 
             <button
-              className="button"
-              onClick={() => togglePopup("addNewBook")}
+              className={`button ${
+                showPage === "addNewReader" ? "active" : ""
+              }`}
+              onClick={() => setshowPage("addNewReader")}
             >
-              {showPage === "addNewBook" ? "Back Home" : "Add new book"}
+              Add New Reader
             </button>
 
             <button
-              className="button"
-              onClick={() => togglePopup("showAllProfiles")}
+              className={`button ${showPage === "addNewBook" ? "active" : ""}`}
+              onClick={() => setshowPage("addNewBook")}
             >
-              {showPage === "showAllProfiles" ? "Back Home" : "Profiles"}
+              Add New Book
+            </button>
+
+            <button
+              className={`button ${
+                showPage === "showAllProfiles" ? "active" : ""
+              }`}
+              onClick={() => setshowPage("showAllProfiles")}
+            >
+              Profiles
             </button>
           </div>
         </>
@@ -219,10 +234,23 @@ function App() {
           <Loading />
         ) : showPage === "Login" ? (
           <Login setshowPage={setshowPage} supabase={supabase} />
-        ) : showPage === "Content" ? (
-          <AddBookTaker supabase={supabase} book_takers={bookTakers} readers={readers} books={books} fetchBookTakers={fetchBookTakers} userId={userId}/>
+        ) : showPage === "addBookTaker" ? (
+          <AddBookTaker
+            supabase={supabase}
+            book_takers={bookTakers}
+            readers={readers}
+            books={books}
+            fetchBookTakers={fetchBookTakers}
+            userId={userId}
+          />
         ) : showPage === "showAllBooks" ? (
-          <BookList supabase={supabase} books={books} userId={userId} fetchBooks={fetchBooks} fetchBookTakers={fetchBookTakers}/>
+          <BookList
+            supabase={supabase}
+            books={books}
+            userId={userId}
+            fetchBooks={fetchBooks}
+            fetchBookTakers={fetchBookTakers}
+          />
         ) : showPage === "addNewReader" ? (
           <AddNewReader
             supabase={supabase}
@@ -230,10 +258,30 @@ function App() {
             userId={userId}
           />
         ) : showPage === "addNewBook" ? (
-          <AddNewBook supabase={supabase} addBook={addBook} userId={userId} lastBookNumber={lastBookNumber}/>
+          <AddNewBook
+            supabase={supabase}
+            addBook={addBook}
+            userId={userId}
+            lastBookNumber={lastBookNumber}
+          />
         ) : showPage === "showAllProfiles" ? (
-          <ProfileList supabase={supabase} profilesList={readers} userId={userId} fetchProfiles={fetchProfiles} fetchBookTakers={fetchBookTakers}/>
-        ) : null}
+          <ProfileList
+            supabase={supabase}
+            profilesList={readers}
+            userId={userId}
+            fetchProfiles={fetchProfiles}
+            fetchBookTakers={fetchBookTakers}
+          />
+        ) : (
+          <AddBookTaker
+            supabase={supabase}
+            book_takers={bookTakers}
+            readers={readers}
+            books={books}
+            fetchBookTakers={fetchBookTakers}
+            userId={userId}
+          />
+        )}
       </div>
     </div>
   );

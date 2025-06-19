@@ -13,7 +13,20 @@
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   transition: all 0.3s ease;
+  color: #333;
 }
+
+.button:hover {
+  transform: scale(1.05);
+  background-color: rgb(214, 237, 255);
+}
+
+.button.active {
+  background-color: #006e00; 
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  color: #fff;
+}
+
 
 .remainder {
   letter-spacing: 1px;
@@ -23,12 +36,6 @@
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   transition: all 0.3s ease;
-}
-
-.button:hover,
-.remainder:hover {
-  transform: scale(1.05);
-  background-color: rgb(214, 237, 255);
 }
 
 .form {
