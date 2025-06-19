@@ -226,7 +226,7 @@ function App() {
         ) : showPage === "Content" ? (
           <Content supabase={supabase} book_takers={bookTakers} readers={readers} books={books} addBookTaker={addBookTaker} userId={userId}/>
         ) : showPage === "showAllBooks" ? (
-          <BookList supabase={supabase} books={books} userId={userId} fetchBooks={fetchBooks}/>
+          <BookList supabase={supabase} books={books} userId={userId} fetchBooks={fetchBooks} fetchBookTakers={fetchBookTakers}/>
         ) : showPage === "addNewReader" ? (
           <AddNewReader
             supabase={supabase}

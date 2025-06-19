@@ -6,7 +6,7 @@ import "./CssFile/BookList.css";
 
 import { ToastContainer, toast } from "react-toastify";
 
-const BookList = ({ supabase, books, userId, fetchBooks }) => {
+const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [deletingBookId, setDeletingBookId] = useState(null);
 
@@ -32,12 +32,19 @@ const BookList = ({ supabase, books, userId, fetchBooks }) => {
       .eq("id", bookId)
       .eq("user_id", userId);
 
-    if (error) {
+    const { err } = await supabase
+      .from("book_takers")
+      .delete()
+      .eq("book_id", bookId)
+      .eq("user_id", userId);
+
+    if (error && err) {
       console.error(error);
       toast.error("Failed to delete the book. Please try again.");
     } else {
       toast.success("Book deleted!");
       fetchBooks();
+      fetchBookTakers();
     }
     toast.dismiss(loading);
   };

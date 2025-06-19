@@ -25,8 +25,10 @@ function AddBookTaker({
 
   // console.log("books");
   // console.log(books);
+  
   // console.log("readers");
   // console.log(readers);
+
   // console.log("book_takers");
   // console.log(book_takers);
 
