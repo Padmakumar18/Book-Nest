@@ -6,7 +6,7 @@ import "./CssFile/BookList.css";
 
 import { ToastContainer, toast } from "react-toastify";
 
-const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers}) => {
+const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [deletingBookId, setDeletingBookId] = useState(null);
 
@@ -26,27 +26,33 @@ const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers}) => {
     const loading = toast.loading("Deleting Book...");
     setDeletingBookId(bookId);
 
-    const { error } = await supabase
-      .from("books")
-      .delete()
-      .eq("id", bookId)
-      .eq("user_id", userId);
+    try {
+      const { error } = await supabase
+        .from("books")
+        .delete()
+        .eq("id", bookId)
+        .eq("user_id", userId);
 
-    const { err } = await supabase
-      .from("book_takers")
-      .delete()
-      .eq("book_id", bookId)
-      .eq("user_id", userId);
+      const { error: err } = await supabase
+        .from("book_takers")
+        .delete()
+        .eq("book_id", bookId)
+        .eq("user_id", userId);
 
-    if (error && err) {
-      console.error(error);
-      toast.error("Failed to delete the book. Please try again.");
-    } else {
-      toast.success("Book deleted!");
-      fetchBooks();
-      fetchBookTakers();
+      if (error || err) {
+        console.error(error || err);
+        toast.error("Failed to delete the book. Please try again.");
+      } else {
+        toast.success("Book deleted!");
+        fetchBooks();
+        fetchBookTakers();
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("An unexpected error occurred.");
+    } finally {
+      toast.dismiss(loading);
     }
-    toast.dismiss(loading);
   };
 
   return (

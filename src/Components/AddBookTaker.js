@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CssFile/Content.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,7 +10,7 @@ function AddBookTaker({
   book_takers,
   readers,
   books,
-  addBookTaker,
+  fetchBookTakers,
   userId,
 }) {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ function AddBookTaker({
 
   // console.log("books");
   // console.log(books);
-  
+
   // console.log("readers");
   // console.log(readers);
 
@@ -50,11 +50,11 @@ function AddBookTaker({
         // console.log(updated[editIndex].id)
 
         await alterBookTaker(updated[editIndex].id);
-        addBookTaker(updated);
+        fetchBookTakers();
         setEditIndex(null);
       } else {
         await insertBookTaker();
-        addBookTaker((prev) => [...prev, formData]);
+        fetchBookTakers();
       }
       handleClear();
     } catch (error) {
@@ -137,10 +137,32 @@ function AddBookTaker({
     setEditIndex(null);
   };
 
-  const handleDelete = (index) => {
-    const updated = [...book_takers];
-    updated.splice(index, 1);
-    addBookTaker(updated);
+  const handleDelete = async (index) => {
+    const loading = toast.loading("Deleting reader...");
+
+    try {
+      const { error } = await supabase
+        .from("book_takers")
+        .delete()
+        .eq("id", book_takers[index].id)
+        .eq("user_id", userId);
+
+      if (error) {
+        console.error(error.message);
+        toast.error("Failed to delete. Please try again.");
+        throw error;
+      }
+      else {
+        fetchBookTakers();
+      }
+
+      toast.success("Successfully deleted!");
+    } catch (err) {
+      console.error(err);
+      toast.error("An unexpected error occurred.");
+    } finally {
+      toast.dismiss(loading);
+    }
   };
 
   const handleEdit = (index) => {

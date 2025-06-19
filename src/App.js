@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Content from "./Components/AddBookTaker";
+import AddBookTaker from "./Components/AddBookTaker";
 import AddNewReader from "./Components/AddNewReader";
 import AddNewBook from "./Components/AddNewBook";
 import BookList from "./Components/BookList";
@@ -126,10 +126,6 @@ function App() {
     }
   }
 
-  const addBookTaker = (bookTaker) => {
-    setbookTakers(bookTaker);
-  };
-
   const addBook = (newBook) => {
     setBooks((prev) => [...prev, newBook]);
   };
@@ -224,7 +220,7 @@ function App() {
         ) : showPage === "Login" ? (
           <Login setshowPage={setshowPage} supabase={supabase} />
         ) : showPage === "Content" ? (
-          <Content supabase={supabase} book_takers={bookTakers} readers={readers} books={books} addBookTaker={addBookTaker} userId={userId}/>
+          <AddBookTaker supabase={supabase} book_takers={bookTakers} readers={readers} books={books} fetchBookTakers={fetchBookTakers} userId={userId}/>
         ) : showPage === "showAllBooks" ? (
           <BookList supabase={supabase} books={books} userId={userId} fetchBooks={fetchBooks} fetchBookTakers={fetchBookTakers}/>
         ) : showPage === "addNewReader" ? (
@@ -236,7 +232,7 @@ function App() {
         ) : showPage === "addNewBook" ? (
           <AddNewBook supabase={supabase} addBook={addBook} userId={userId} lastBookNumber={lastBookNumber}/>
         ) : showPage === "showAllProfiles" ? (
-          <ProfileList supabase={supabase} profilesList={readers} />
+          <ProfileList supabase={supabase} profilesList={readers} userId={userId} fetchProfiles={fetchProfiles} fetchBookTakers={fetchBookTakers}/>
         ) : null}
       </div>
     </div>

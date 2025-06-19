@@ -1,26 +1,45 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
 
-const ProfileList = ({ supabase, profilesList }) => {
-  const [profiles, setProfiles] = useState(profilesList || []);
+const ProfileList = ({ supabase, profilesList, userId, fetchProfiles, fetchBookTakers }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  // console.log("profilesList")
-  // console.log(profilesList)
+  const handleDelete = async (id) => {
+    const loading = toast.loading("Deleting Profile...");
 
-  const handleDelete = (id) => {
-    const updatedProfiles = profiles.filter((profile) => profile.id !== id);
-    setProfiles(updatedProfiles);
+    try {
+      const { error } = await supabase
+        .from("readers")
+        .delete()
+        .eq("id", id)
+        .eq("user_id", userId);
+
+      const { error: err } = await supabase
+        .from("book_takers")
+        .delete()
+        .eq("reader_id", id)
+        .eq("user_id", userId);
+
+      if (error || err) {
+        console.error(error || err);
+        toast.error("Failed to delete the profile. Please try again.");
+      } else {
+        toast.success("Profile deleted!");
+        fetchProfiles();
+        fetchBookTakers();
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("An unexpected error occurred.");
+    } finally {
+      toast.dismiss(loading);
+    }
   };
-
-  const filteredProfiles = profiles
-    .filter((profile) =>
-      profile.full_name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => a.full_name.localeCompare(b.full_name));
 
   return (
     <div className="p-4">
+      <ToastContainer position="top-center" />
       <div className="flex gap-2 mb-4">
         <input
           type="text"
@@ -37,7 +56,9 @@ const ProfileList = ({ supabase, profilesList }) => {
         </button>
       </div>
 
-      {filteredProfiles.length > 0 ? (
+      {profilesList.filter(profile =>
+        profile.full_name.toLowerCase().includes(searchQuery.toLowerCase())
+      ).length > 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full border-collapse border border-gray-300">
             <thead>
@@ -54,32 +75,37 @@ const ProfileList = ({ supabase, profilesList }) => {
               </tr>
             </thead>
             <tbody>
-              {filteredProfiles.map((profile, index) => (
-                <motion.tr
-                  key={profile.id || index}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="hover:bg-gray-50"
-                >
-                  <td className="border border-gray-300 px-3 py-2">{profile.full_name}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.membership_type}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.gender}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.date_of_birth}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.contact_number}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.email_address}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.address}</td>
-                  <td className="border border-gray-300 px-3 py-2">{profile.id_proof}</td>
-                  <td className="border border-gray-300 px-3 py-2">
-                    <button
-                      onClick={() => handleDelete(profile.id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </motion.tr>
-              ))}
+              {profilesList
+                .filter((profile) =>
+                  profile.full_name.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .sort((a, b) => a.full_name.localeCompare(b.full_name))
+                .map((profile, index) => (
+                  <motion.tr
+                    key={profile.id || index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className="hover:bg-gray-50"
+                  >
+                    <td className="border border-gray-300 px-3 py-2">{profile.full_name}</td>
+                    <td className="border border-gray-300 px-3 py-2">{profile.membership_type}</td>
+                    <td className="border border-gray-300 px-3 py-2">{profile.gender}</td>
+                    <td className="border border-gray-300 px-3 py-2">{profile.date_of_birth}</td>
+                    <td className="border border-gray-300 px-3 py-2">{profile.contact_number}</td>
+                    <td className="border border-gray-300 px-3 py-2">{profile.email_address}</td>
+                    <td className="border border-gray-300 px-3 py-2">{profile.address}</td>
+                    <td className="border border-gray-300 px-3 py-2">{profile.id_proof}</td>
+                    <td className="border border-gray-300 px-3 py-2">
+                      <button
+                        onClick={() => handleDelete(profile.id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </motion.tr>
+                ))}
             </tbody>
           </table>
         </div>
