@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster, toast } from 'react-hot-toast';
 
 import AddBookTaker from "./Components/AddBookTaker";
 import AddNewReader from "./Components/AddNewReader";
@@ -163,7 +161,7 @@ function App() {
 
   return (
     <div className="App">
-      <ToastContainer position="top-center" />
+      <Toaster position="top-center" />
       {showPage !== "Login" && showPage !== "Loading" && (
         <>
           <div className="header">

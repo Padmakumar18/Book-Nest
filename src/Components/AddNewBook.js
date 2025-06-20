@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CssFile/PopupForm.css";
 
-import { ToastContainer, toast } from "react-toastify";
+import { Toaster, toast } from 'react-hot-toast';
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -96,7 +96,7 @@ function AddNewBook({ supabase, fetchBooks, userId, lastBookNumber }) {
 
   return (
     <div className="add-book-container">
-      <ToastContainer position="top-center" />
+      <Toaster position="top-center" />
       <h2 className="add-book-title">Add New Book</h2>
       <form onSubmit={handleSubmit} className="add-book-form">
         <div className="form-row">

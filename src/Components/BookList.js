@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import "./CssFile/BookList.css";
 
-import { ToastContainer, toast } from "react-toastify";
+import { Toaster, toast } from 'react-hot-toast';
 
 const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -57,7 +57,7 @@ const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers }) => {
 
   return (
     <div className="container">
-      <ToastContainer position="top-center" />
+      <Toaster position="top-center" />
       <div className="flex gap-2 mb-4">
         <input
           type="text"

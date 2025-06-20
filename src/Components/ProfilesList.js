@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ToastContainer, toast } from "react-toastify";
+import { Toaster, toast } from 'react-hot-toast';
 
 const ProfileList = ({
   supabase,
@@ -45,7 +45,7 @@ const ProfileList = ({
 
   return (
     <div className="container p-4">
-      <ToastContainer position="top-center" />
+      <Toaster position="top-center" />
       <div className="flex gap-2 mb-4">
         <input
           type="text"

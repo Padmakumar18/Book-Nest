@@ -1,7 +1,7 @@
 import React, { use, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CssFile/Content.css";
-import { ToastContainer, toast } from "react-toastify";
+import { Toaster, toast } from 'react-hot-toast';
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -24,8 +24,8 @@ function AddBookTaker({
     book_number: "",
   });
 
-  console.log("books");
-  console.log(books);
+  // console.log("books");
+  // console.log(books);
 
   // console.log("readers");
   // console.log(readers);
@@ -217,7 +217,7 @@ function AddBookTaker({
 
   return (
     <div className="p-4 md:p-8 bg-gray-100">
-      <ToastContainer position="top-center" />
+      <Toaster position="top-center" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-bold mb-4 text-center">
