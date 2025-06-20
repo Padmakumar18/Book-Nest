@@ -1,76 +1,52 @@
-.library-loader {
+.loading-container {
   height: 100vh;
-  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'Georgia', serif;
-  color: #4b3f2f;
+  background: #ffffff;
+  color: #1f2937; /* slate-800 */
+  text-align: center;
 }
 
-.floating-book {
-  position: relative;
-  width: 60px;
-  height: 80px;
-  transform-style: preserve-3d;
-  animation: float 2s ease-in-out infinite;
+.logo {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  color: #1f2937; /* slate-800 */
 }
 
-.cover {
-  position: absolute;
-  width: 60px;
-  height: 80px;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+.brand {
+  margin-left: 0.5rem;
+  background: linear-gradient(to right, #6366f1, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.front {
-  background: white;
-  border: 2px solid #8b5e3c;
-  transform: rotateY(0deg) translateZ(2px);
+.dots span {
+  font-size: 2rem;
+  animation: blink 1.2s infinite alternate;
+  margin: 0 3px;
+  color: #6366f1; 
 }
 
-.back {
-  background: #d4bfa3;
-  transform: rotateY(180deg) translateZ(2px);
-  border: 2px solid #8b5e3c;
+.dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dots span:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
-.spine {
-  background: #8b5e3c;
-  width: 4px;
-  height: 80px;
-  position: absolute;
-  left: -4px;
-  top: 0;
-  border-radius: 2px;
+@keyframes blink {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-.loading-text {
-  margin-top: 20px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  animation: fadeText 1.2s infinite alternate;
-}
-
-@keyframes fadeText {
-  from {
-    opacity: 0.4;
-  }
-  to {
-    opacity: 1;
-  }
+.tagline {
+  margin-top: 1rem;
+  font-size: 1rem;
+  opacity: 0.7;
+  color: #4b5563;
 }

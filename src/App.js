@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Toaster, toast } from 'react-hot-toast';
+import { Toaster, toast } from "react-hot-toast";
 
 import AddBookTaker from "./Components/AddBookTaker";
 import AddNewReader from "./Components/AddNewReader";
@@ -184,7 +184,7 @@ function App() {
               }`}
               onClick={() => setshowPage("addBookTaker")}
             >
-              Issue Book
+              Issue a Book
             </button>
 
             <button
@@ -193,7 +193,7 @@ function App() {
               }`}
               onClick={() => setshowPage("showAllBooks")}
             >
-              View All Books
+              Books Catalog
             </button>
 
             <button
@@ -202,8 +202,8 @@ function App() {
               }`}
               onClick={() => setshowPage("showAllProfiles")}
             >
-              Profiles
-            </button>                  
+              Reader Profiles
+            </button>
 
             <button
               className={`button ${
@@ -211,19 +211,19 @@ function App() {
               }`}
               onClick={() => setshowPage("addNewReader")}
             >
-              Add New Reader
+              Register Reader
             </button>
 
             <button
               className={`button ${showPage === "addNewBook" ? "active" : ""}`}
               onClick={() => setshowPage("addNewBook")}
             >
-              Add New Book
+              Register New Book
             </button>
           </div>
         </>
       )}
-
+       
       <div>
         {showPage === "Loading" ? (
           <Loading />
