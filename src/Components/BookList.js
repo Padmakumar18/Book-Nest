@@ -10,8 +10,8 @@ const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [deletingBookId, setDeletingBookId] = useState(null);
 
-  console.log("books");
-  console.log(books);
+  // console.log("books");
+  // console.log(books);
 
   const filteredBooks = books
     ?.slice()

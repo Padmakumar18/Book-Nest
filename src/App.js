@@ -126,14 +126,6 @@ function App() {
     }
   }
 
-  const addBook = (newBook) => {
-    setBooks((prev) => [...prev, newBook]);
-  };
-
-  const addReader = (newReader) => {
-    setReaders((prev) => [...prev, newReader]);
-  };
-
   const autoLogin = async (storedEmail, storedPassword) => {
     const { error } = await supabase.auth.signInWithPassword({
       email: storedEmail,
@@ -203,6 +195,15 @@ function App() {
 
             <button
               className={`button ${
+                showPage === "showAllProfiles" ? "active" : ""
+              }`}
+              onClick={() => setshowPage("showAllProfiles")}
+            >
+              Profiles
+            </button>                  
+
+            <button
+              className={`button ${
                 showPage === "addNewReader" ? "active" : ""
               }`}
               onClick={() => setshowPage("addNewReader")}
@@ -216,15 +217,6 @@ function App() {
             >
               Add New Book
             </button>
-
-            <button
-              className={`button ${
-                showPage === "showAllProfiles" ? "active" : ""
-              }`}
-              onClick={() => setshowPage("showAllProfiles")}
-            >
-              Profiles
-            </button>
           </div>
         </>
       )}
@@ -237,6 +229,7 @@ function App() {
         ) : showPage === "addBookTaker" ? (
           <AddBookTaker
             supabase={supabase}
+            fetchBooks={fetchBooks}
             book_takers={bookTakers}
             readers={readers}
             books={books}
@@ -254,13 +247,13 @@ function App() {
         ) : showPage === "addNewReader" ? (
           <AddNewReader
             supabase={supabase}
-            addReader={addReader}
+            fetchProfiles={fetchProfiles}
             userId={userId}
           />
         ) : showPage === "addNewBook" ? (
           <AddNewBook
             supabase={supabase}
-            addBook={addBook}
+            fetchBooks={fetchBooks}
             userId={userId}
             lastBookNumber={lastBookNumber}
           />
@@ -275,6 +268,7 @@ function App() {
         ) : (
           <AddBookTaker
             supabase={supabase}
+            fetchBooks={fetchBooks}
             book_takers={bookTakers}
             readers={readers}
             books={books}

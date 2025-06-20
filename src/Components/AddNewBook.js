@@ -11,7 +11,7 @@ function AddNewBook({ supabase, fetchBooks, userId, lastBookNumber }) {
     author: "",
     genre: "",
     published_year: "",
-    availability_status: "Available",
+    availability_status: "",
     number_of_copies: "",
   });
 
@@ -89,7 +89,7 @@ function AddNewBook({ supabase, fetchBooks, userId, lastBookNumber }) {
       author: "",
       genre: "",
       published_year: "",
-      availability_status: "Available",
+      availability_status: "",
       number_of_copies: "",
     });
   }
@@ -135,7 +135,7 @@ function AddNewBook({ supabase, fetchBooks, userId, lastBookNumber }) {
 
           <select
             className="form-input"
-            name="availabilityStatus"
+            name="availability_status"
             value={formData.availability_status}
             onChange={handleChange}
             required

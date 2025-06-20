@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { v4 as uuidv4 } from "uuid";
 
-function AddNewReader({ supabase, addReader, userId }) {
+function AddNewReader({ supabase, fetchProfiles, userId }) {
   const [formData, setFormData] = useState({
     full_name: "",
     gender: "",
@@ -26,7 +26,7 @@ function AddNewReader({ supabase, addReader, userId }) {
     e.preventDefault();
     try {
       await insertReader(supabase, userId, formData);
-      addReader(formData);
+      fetchProfiles();
       clearForm();
     } catch (error) {
       console.error(error);

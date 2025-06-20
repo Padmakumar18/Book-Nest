@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 function AddBookTaker({
   supabase,
+  fetchBooks,
   book_takers,
   readers,
   books,
@@ -78,8 +79,18 @@ function AddBookTaker({
           book_number: formData.book_number,
         },
       ]);
+
+      const { error: updateError } = await supabase
+        .from("books")
+        .update({ availability_status: "Checked Out" })
+        .eq("id", formData.book_id)
+        .eq("user_id", userId);
+
+        fetchBooks();
+
       toast.dismiss(loading);
-      if (error) {
+
+      if (error || updateError) {
         console.error(error.message);
         toast.error("Failed to add. Please try again.");
         throw error;
@@ -147,12 +158,19 @@ function AddBookTaker({
         .eq("id", book_takers[index].id)
         .eq("user_id", userId);
 
-      if (error) {
+        const { error: updateError } = await supabase
+        .from("books")
+        .update({ availability_status: "Available" })
+        .eq("id", book_takers[index].book_id)
+        .eq("user_id", userId);
+
+        fetchBooks();
+
+      if (error || updateError) {
         console.error(error.message);
         toast.error("Failed to delete. Please try again.");
         throw error;
-      }
-      else {
+      } else {
         fetchBookTakers();
       }
 
@@ -292,7 +310,6 @@ function AddBookTaker({
           </form>
         </div>
 
-        {/* Table Section */}
         <div className="bg-white p-6 rounded-lg shadow overflow-auto max-h-[32rem]">
           <h3 className="text-lg font-semibold mb-4">Book Takers List</h3>
           {book_takers.length === 0 ? (
