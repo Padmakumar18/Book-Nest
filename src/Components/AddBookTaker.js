@@ -50,7 +50,7 @@ function AddBookTaker({
         // console.log("updated")
         // console.log(updated[editIndex].id)
 
-        await alterBookTaker(updated[editIndex].id);
+        await alterBookTaker(updated[editIndex].id,book_takers[editIndex].book_id,formData.book_id);
         fetchBookTakers();
         setEditIndex(null);
       } else {
@@ -104,8 +104,10 @@ function AddBookTaker({
     }
   }
 
-  async function alterBookTaker(row_id) {
+  async function alterBookTaker(row_id , availability_book_id,checked_out_book_id) {
     const loading = toast.loading("Adding reader...");
+    console.log(availability_book_id)
+    console.log(checked_out_book_id)
     try {
       const { error } = await supabase
         .from("book_takers")
@@ -120,9 +122,26 @@ function AddBookTaker({
           book_number: formData.book_number,
         })
         .eq("id", row_id);
+
+        const { error1 } = await supabase
+        .from("books")
+        .update({ availability_status: "Checked Out" })
+        .eq("id", checked_out_book_id)
+        .eq("user_id", userId);
+
+        const { error2 } = await supabase
+        .from("books")
+        .update({ availability_status: "Available" })
+        .eq("id",availability_book_id)
+        .eq("user_id", userId);
+
+        fetchBooks();
+
       toast.dismiss(loading);
-      if (error) {
+      if (error || error1 || error2 ) {
         console.error(error.message);
+        console.error(error1.message);
+        console.error(error2.message);
         toast.error("Failed to add. Please try again.");
         throw error;
       } else {
