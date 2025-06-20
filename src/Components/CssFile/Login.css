@@ -105,3 +105,36 @@
 .auth-message.error {
   color: #dc2626;
 }
+
+.demo-info {
+  background-color: #f9fafb;
+  padding: 16px;
+  margin-top: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.demo-text {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.demo-credentials p {
+  margin: 4px 0;
+  color: #1f2937;
+}
+
+.auth-toggle {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+.auth-toggle-button {
+  color: #4f46e5;
+  font-weight: 700;
+  margin-left: 6px;
+}

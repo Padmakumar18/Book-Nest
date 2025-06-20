@@ -114,8 +114,6 @@ function AddBookTaker({
     checked_out_book_id
   ) {
     const loading = toast.loading("Adding reader...");
-    console.log(availability_book_id);
-    console.log(checked_out_book_id);
     try {
       const { error } = await supabase
         .from("book_takers")

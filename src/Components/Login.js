@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./CssFile/Login.css";
 import toast, { Toaster } from "react-hot-toast";
 
-function Login({setshowPage,supabase}) {
+function Login({ setshowPage, supabase }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +20,7 @@ function Login({setshowPage,supabase}) {
       } else {
         toast.success("Signup successful! Check your email.");
         localStorage.setItem("library-management-email", email);
-      localStorage.setItem("library-management-pass", password);
+        localStorage.setItem("library-management-pass", password);
       }
     } else {
       const { error } = await supabase.auth.signInWithPassword({
@@ -33,7 +33,7 @@ function Login({setshowPage,supabase}) {
       } else {
         toast.success("Login successful.");
         localStorage.setItem("library-management-email", email);
-      localStorage.setItem("library-management-pass", password);
+        localStorage.setItem("library-management-pass", password);
         setshowPage("Content");
       }
     }
@@ -42,6 +42,7 @@ function Login({setshowPage,supabase}) {
   return (
     <div className="auth-container">
       <Toaster position="top-center" reverseOrder={false} />
+      
       <div className="auth-card">
         <h2 className="auth-title">
           {isSignUp ? "Create an Account" : "Welcome Back"}
@@ -49,9 +50,7 @@ function Login({setshowPage,supabase}) {
 
         <form onSubmit={handleAuth} className="auth-form">
           <div>
-            <label className="auth-label" htmlFor="email">
-              Email
-            </label>
+            <label className="auth-label" htmlFor="email">Email</label>
             <input
               id="email"
               type="email"
@@ -64,9 +63,7 @@ function Login({setshowPage,supabase}) {
           </div>
 
           <div>
-            <label className="auth-label" htmlFor="password">
-              Password
-            </label>
+            <label className="auth-label" htmlFor="password">Password</label>
             <input
               id="password"
               type="password"
@@ -103,6 +100,14 @@ function Login({setshowPage,supabase}) {
             {message}
           </p>
         )}
+
+        <div className="demo-info">
+          <p className="demo-text">Use your own account or try the demo:</p>
+          <div className="demo-credentials">
+            <p><strong>Email:</strong> demo@example.com</p>
+            <p><strong>Password:</strong> demo123</p>
+          </div>
+        </div>
       </div>
     </div>
   );

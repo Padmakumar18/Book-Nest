@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Toaster, toast } from 'react-hot-toast';
 
 import AddBookTaker from "./Components/AddBookTaker";
@@ -19,7 +19,12 @@ function App() {
   const [userId, setUserId] = useState("");
   const [lastBookNumber, setlastBookNumber] = useState(0);
 
+  const hasAutoLoggedIn = useRef(false); // ✅ To prevent auto-login firing twice
+
   useEffect(() => {
+    if (hasAutoLoggedIn.current) return;
+    hasAutoLoggedIn.current = true;
+
     setshowPage("Loading");
     const localStorageEmail = localStorage.getItem("library-management-email");
     const localStoragePass = localStorage.getItem("library-management-pass");
