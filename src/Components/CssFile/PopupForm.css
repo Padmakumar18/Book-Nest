@@ -34,8 +34,14 @@
   font-size: 1rem;
 }
 
+textarea.form-input {
+  resize: vertical;
+}
+
 .form-buttons {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   justify-content: flex-end;
 }
 
@@ -47,17 +53,77 @@
   border-radius: 6px;
   border: none;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button {
+  background-color: #007bff;
+}
+
+.clear-button {
+  background-color: #f0ad4e;
 }
 
 .submit-button:hover {
   background-color: #0056b3;
 }
+
 .clear-button:hover {
   background-color: #caa220;
+}
+
+@media (max-width: 768px) {
+  .add-book-container {
+    padding: 1.5rem;
+  }
+
+  .add-book-title {
+    font-size: 1.75rem;
+  }
+
+  .form-input {
+    font-size: 0.95rem;
+  }
+
+  .submit-button,
+  .clear-button {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+  }
 }
 
 @media (max-width: 600px) {
   .form-row {
     flex-direction: column;
+  }
+
+  .form-input {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .form-buttons {
+    justify-content: center;
+  }
+
+  .add-book-title {
+    font-size: 1.5rem;
+  }
+
+  .submit-button,
+  .clear-button {
+    width: 100%;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .add-book-title {
+    font-size: 1.3rem;
+  }
+
+  .submit-button,
+  .clear-button {
+    font-size: 0.9rem;
   }
 }

@@ -9,6 +9,7 @@ function Login({ setshowPage, supabase }) {
   const [message, setMessage] = useState("");
 
   const handleAuth = async (e) => {
+    const loading = toast.loading("Loading...");
     e.preventDefault();
     setMessage("");
 
@@ -37,6 +38,7 @@ function Login({ setshowPage, supabase }) {
         setshowPage("Content");
       }
     }
+    toast.dismiss(loading);
   };
 
   return (
@@ -104,7 +106,7 @@ function Login({ setshowPage, supabase }) {
         <div className="demo-info">
           <p className="demo-text">Use your own account or try the demo:</p>
           <div className="demo-credentials">
-            <p><strong>Email:</strong> demo@example.com</p>
+            <p><strong>Email:</strong> testing.trail98@gmail.com</p>
             <p><strong>Password:</strong> demo123</p>
           </div>
         </div>

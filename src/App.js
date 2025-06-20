@@ -139,7 +139,7 @@ function App() {
       console.error(error.message);
       setshowPage("Login");
     } else {
-      toast.success("Auto login successful!");
+      toast.success("Login successful!");
       await fetchBooks();
       await fetchProfiles();
       await fetchBookTakers();
