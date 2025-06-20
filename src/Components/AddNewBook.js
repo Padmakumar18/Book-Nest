@@ -178,7 +178,7 @@ function AddNewBook({ supabase, fetchBooks, userId, lastBookNumber }) {
         <div className="form-buttons">
           <button
             type="submit"
-            className="bg-yellow-500 clear-button mr-3"
+            className="p-3 mr-3 bg-orange-500 text-white rounded-md hover:bg-orange-400 transition"
             onClick={clearForm}
           >
             Clear Form

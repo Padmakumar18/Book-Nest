@@ -177,10 +177,10 @@ function AddNewReader({ supabase, fetchProfiles, userId }) {
         <div className="form-buttons">
           <button
             type="button"
-            className="bg-yellow-500 clear-button mr-3"
+            className="p-3 mr-3 bg-orange-500 text-white rounded-md hover:bg-orange-400 transition"
             onClick={clearForm}
           >
-            Clear
+            Clear Form
           </button>
           <button type="submit" className="bg-blue-500 submit-button">
             Add Reader

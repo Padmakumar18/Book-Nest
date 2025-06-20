@@ -3,12 +3,6 @@
   padding: 1rem;
 }
 
-.search-bar {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
 .search-bar input {
   flex: 1;
   padding: 0.5rem 0.75rem;
@@ -25,10 +19,6 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
-}
-
-.search-bar button:hover {
-  background-color: #005fa3;
 }
 
 .list {
@@ -91,13 +81,6 @@
   position: absolute;
   bottom: 10px;
   right: 10px;
-}
-
-.no-results {
-  text-align: center;
-  color: #777;
-  font-size: 1.1rem;
-  margin-top: 2rem;
 }
 
 @media (min-width: 600px) {

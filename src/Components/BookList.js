@@ -58,14 +58,20 @@ const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers }) => {
   return (
     <div className="container">
       <ToastContainer position="top-center" />
-      <div className="search-bar">
+      <div className="flex gap-2 mb-4">
         <input
           type="text"
           placeholder="Search by title or author..."
+          className="border border-gray-300 rounded px-3 py-2 flex-1"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button onClick={() => setSearchQuery("")}>Clear</button>
+        <button
+          onClick={() => setSearchQuery("")}
+          className="bg-gray-500 text-white px-4 py-2 rounded"
+        >
+          Clear
+        </button>
       </div>
 
       <div className="list">
@@ -119,7 +125,7 @@ const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers }) => {
             </motion.div>
           ))
         ) : (
-          <p className="no-results">No books found.</p>
+          <p className="text-center text-gray-500 text-lg mt-4">No books found.</p>
         )}
       </div>
     </div>
