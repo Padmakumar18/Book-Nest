@@ -24,8 +24,8 @@ function AddBookTaker({
     book_number: "",
   });
 
-  // console.log("books");
-  // console.log(books);
+  console.log("books");
+  console.log(books);
 
   // console.log("readers");
   // console.log(readers);
@@ -50,7 +50,11 @@ function AddBookTaker({
         // console.log("updated")
         // console.log(updated[editIndex].id)
 
-        await alterBookTaker(updated[editIndex].id,book_takers[editIndex].book_id,formData.book_id);
+        await alterBookTaker(
+          updated[editIndex].id,
+          book_takers[editIndex].book_id,
+          formData.book_id
+        );
         fetchBookTakers();
         setEditIndex(null);
       } else {
@@ -86,7 +90,7 @@ function AddBookTaker({
         .eq("id", formData.book_id)
         .eq("user_id", userId);
 
-        fetchBooks();
+      fetchBooks();
 
       toast.dismiss(loading);
 
@@ -104,10 +108,14 @@ function AddBookTaker({
     }
   }
 
-  async function alterBookTaker(row_id , availability_book_id,checked_out_book_id) {
+  async function alterBookTaker(
+    row_id,
+    availability_book_id,
+    checked_out_book_id
+  ) {
     const loading = toast.loading("Adding reader...");
-    console.log(availability_book_id)
-    console.log(checked_out_book_id)
+    console.log(availability_book_id);
+    console.log(checked_out_book_id);
     try {
       const { error } = await supabase
         .from("book_takers")
@@ -123,22 +131,22 @@ function AddBookTaker({
         })
         .eq("id", row_id);
 
-        const { error1 } = await supabase
+      const { error1 } = await supabase
         .from("books")
         .update({ availability_status: "Checked Out" })
         .eq("id", checked_out_book_id)
         .eq("user_id", userId);
 
-        const { error2 } = await supabase
+      const { error2 } = await supabase
         .from("books")
         .update({ availability_status: "Available" })
-        .eq("id",availability_book_id)
+        .eq("id", availability_book_id)
         .eq("user_id", userId);
 
-        fetchBooks();
+      fetchBooks();
 
       toast.dismiss(loading);
-      if (error || error1 || error2 ) {
+      if (error || error1 || error2) {
         console.error(error.message);
         console.error(error1.message);
         console.error(error2.message);
@@ -177,13 +185,13 @@ function AddBookTaker({
         .eq("id", book_takers[index].id)
         .eq("user_id", userId);
 
-        const { error: updateError } = await supabase
+      const { error: updateError } = await supabase
         .from("books")
         .update({ availability_status: "Available" })
         .eq("id", book_takers[index].book_id)
         .eq("user_id", userId);
 
-        fetchBooks();
+      fetchBooks();
 
       if (error || updateError) {
         console.error(error.message);
@@ -276,8 +284,14 @@ function AddBookTaker({
                 {books
                   .sort((a, b) => a.title.localeCompare(b.title))
                   .map((book) => (
-                    <option key={book.id} value={book.id}>
-                      {book.title}
+                    <option
+                      key={book.id}
+                      value={book.id}
+                      disabled={book.availability_status !== "Available"}
+                    >
+                      {book.title}{" "}
+                      {book.availability_status !== "Available" &&
+                        "(Unavailable)"}
                     </option>
                   ))}
               </select>

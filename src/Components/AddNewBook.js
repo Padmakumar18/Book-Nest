@@ -164,7 +164,7 @@ function AddNewBook({ supabase, fetchBooks, userId, lastBookNumber }) {
             ))}
           </select>
 
-          <input
+          {/* <input
             className="form-input"
             type="number"
             name="number_of_copies"
@@ -172,7 +172,7 @@ function AddNewBook({ supabase, fetchBooks, userId, lastBookNumber }) {
             value={formData.number_of_copies}
             onChange={handleChange}
             required
-          />
+          /> */}
         </div>
 
         <div className="form-buttons">

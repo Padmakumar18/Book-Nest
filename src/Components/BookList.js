@@ -98,9 +98,9 @@ const BookList = ({ supabase, books, userId, fetchBooks, fetchBookTakers }) => {
                 <p>
                   <strong>Year:</strong> {book.published_year}
                 </p>
-                <p>
+                {/* <p>
                   <strong>Copies:</strong> {book.number_of_copies || 0}
-                </p>
+                </p> */}
                 <p
                   className={`availability ${
                     book.availability_status === "Available"
