@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./CssFile/Login.css";
 import toast, { Toaster } from "react-hot-toast";
 
-function Login({ setshowPage, supabase }) {
+function Login({ setshowPage, supabase, callAllFunction }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,6 +36,7 @@ function Login({ setshowPage, supabase }) {
         localStorage.setItem("library-management-email", email);
         localStorage.setItem("library-management-pass", password);
         setshowPage("Content");
+        callAllFunction();
       }
     }
     toast.dismiss(loading);

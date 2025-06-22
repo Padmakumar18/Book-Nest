@@ -19,7 +19,7 @@ function App() {
   const [userId, setUserId] = useState("");
   const [lastBookNumber, setlastBookNumber] = useState(0);
 
-  const hasAutoLoggedIn = useRef(false); // ✅ To prevent auto-login firing twice
+  const hasAutoLoggedIn = useRef(false);
 
   useEffect(() => {
     if (hasAutoLoggedIn.current) return;
@@ -160,8 +160,10 @@ function App() {
     }
   };
 
-  const togglePopup = (popupName) => {
-    setshowPage((prev) => (prev === popupName ? "Content" : popupName));
+  const callAllFunction = () => {
+    fetchBookTakers();
+    fetchBooks();
+    fetchProfiles();
   };
 
   return (
@@ -228,7 +230,7 @@ function App() {
         {showPage === "Loading" ? (
           <Loading />
         ) : showPage === "Login" ? (
-          <Login setshowPage={setshowPage} supabase={supabase} />
+          <Login setshowPage={setshowPage} supabase={supabase} callAllFunction={callAllFunction}/>
         ) : showPage === "addBookTaker" ? (
           <AddBookTaker
             supabase={supabase}
